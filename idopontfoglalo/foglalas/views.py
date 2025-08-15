@@ -103,7 +103,7 @@ def admin_dashboard(request):
     
     services = Service.objects.filter(business=business)
     appointments = Appointment.objects.filter(business=business).order_by('-created_at')[:10]
-    pending_appointments = appointments.filter(status='pending').count()
+    pending_appointments = Appointment.objects.filter(business=business, status='pending').count()
     
     context = {
         'business': business,
