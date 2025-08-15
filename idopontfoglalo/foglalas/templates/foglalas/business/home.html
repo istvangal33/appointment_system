@@ -1,0 +1,90 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}{{ business.name }} - Főoldal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Hero Section -->
+    <div class="col-12">
+        <div class="jumbotron bg-light p-5 rounded-3 mb-4">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Üdvözöljük a {{ business.name }} oldalán!</h1>
+                <p class="col-md-8 fs-4">{{ business.description }}</p>
+                <a class="btn btn-primary btn-lg" href="{% url 'business_booking' business.slug %}" type="button">
+                    Időpont foglalása
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Services Section -->
+    <div class="col-lg-8">
+        <h2 class="mb-4">Szolgáltatásaink</h2>
+        {% if services %}
+            <div class="row">
+                {% for service in services %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ service.name }}</h5>
+                                <p class="card-text">{{ service.description|default:"Részletekért érdeklődjön!" }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Időtartam: {{ service.duration }} perc<br>
+                                        Ár: {{ service.price }} Ft
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">Jelenleg nincsenek elérhető szolgáltatások.</p>
+        {% endif %}
+    </div>
+    
+    <!-- Contact Info Sidebar -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Elérhetőségek</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Cím:</strong><br>{{ business.address }}</p>
+                <p><strong>Telefon:</strong><br><a href="tel:{{ business.phone }}">{{ business.phone }}</a></p>
+                <p><strong>Email:</strong><br><a href="mailto:{{ business.email }}">{{ business.email }}</a></p>
+                
+                {% if business.settings.facebook_url or business.settings.instagram_url or business.settings.website_url %}
+                <hr>
+                <h6>Kövessen minket!</h6>
+                <div class="d-flex gap-2">
+                    {% if business.settings.facebook_url %}
+                        <a href="{{ business.settings.facebook_url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                            Facebook
+                        </a>
+                    {% endif %}
+                    {% if business.settings.instagram_url %}
+                        <a href="{{ business.settings.instagram_url }}" class="btn btn-outline-danger btn-sm" target="_blank">
+                            Instagram
+                        </a>
+                    {% endif %}
+                    {% if business.settings.website_url %}
+                        <a href="{{ business.settings.website_url }}" class="btn btn-outline-info btn-sm" target="_blank">
+                            Weboldal
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                <hr>
+                <a href="{% url 'business_contact' business.slug %}" class="btn btn-outline-primary w-100">
+                    Részletes kapcsolat
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

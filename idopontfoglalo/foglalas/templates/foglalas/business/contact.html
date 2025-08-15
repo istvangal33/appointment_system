@@ -1,0 +1,157 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}{{ business.name }} - Kapcsolat{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <h2>Kapcsolat - {{ business.name }}</h2>
+        <p class="lead">{{ business.description }}</p>
+        
+        <!-- Contact Information -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Elérhetőségek</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Cím</h6>
+                        <p>{{ business.address }}</p>
+                        
+                        <h6>Telefon</h6>
+                        <p><a href="tel:{{ business.phone }}">{{ business.phone }}</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Email</h6>
+                        <p><a href="mailto:{{ business.email }}">{{ business.email }}</a></p>
+                        
+                        {% if business.settings.website_url %}
+                        <h6>Weboldal</h6>
+                        <p><a href="{{ business.settings.website_url }}" target="_blank">{{ business.settings.website_url }}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if business.settings.facebook_url or business.settings.instagram_url %}
+                <hr>
+                <h6>Közösségi média</h6>
+                <div class="d-flex gap-2">
+                    {% if business.settings.facebook_url %}
+                        <a href="{{ business.settings.facebook_url }}" class="btn btn-outline-primary" target="_blank">
+                            <i class="fab fa-facebook me-2"></i>Facebook
+                        </a>
+                    {% endif %}
+                    {% if business.settings.instagram_url %}
+                        <a href="{{ business.settings.instagram_url }}" class="btn btn-outline-danger" target="_blank">
+                            <i class="fab fa-instagram me-2"></i>Instagram
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Business Hours -->
+        {% if business_hours %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Nyitvatartás</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                            {% for hours in business_hours %}
+                            <tr>
+                                <td><strong>{{ hours.get_weekday_display }}</strong></td>
+                                <td>
+                                    {% if hours.is_closed %}
+                                        <span class="text-muted">Zárva</span>
+                                    {% else %}
+                                        {{ hours.open_time|time:"H:i" }} - {{ hours.close_time|time:"H:i" }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Quick Booking Button -->
+        <div class="text-center">
+            <a href="{% url 'business_booking' business.slug %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-calendar-plus me-2"></i>Időpont foglalása
+            </a>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <!-- Contact Form -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Üzenet küldése</h5>
+            </div>
+            <div class="card-body">
+                <form id="contactForm">
+                    <div class="mb-3">
+                        <label for="contactName" class="form-label">Név</label>
+                        <input type="text" class="form-control" id="contactName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="contactEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactPhone" class="form-label">Telefon</label>
+                        <input type="tel" class="form-control" id="contactPhone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactMessage" class="form-label">Üzenet</label>
+                        <textarea class="form-control" id="contactMessage" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-paper-plane me-2"></i>Üzenet küldése
+                    </button>
+                </form>
+                
+                <div id="contactSuccess" class="alert alert-success mt-3 d-none">
+                    Köszönjük üzenetét! Hamarosan válaszolunk.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Map Placeholder -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Megközelítés</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center p-4 bg-light rounded">
+                    <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">{{ business.address }}</p>
+                    <small class="text-muted">Térkép hamarosan elérhető</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Simple form handling - in production, this would send to backend
+    document.getElementById('contactSuccess').classList.remove('d-none');
+    this.reset();
+    
+    // Scroll to success message
+    document.getElementById('contactSuccess').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+{% endblock %}

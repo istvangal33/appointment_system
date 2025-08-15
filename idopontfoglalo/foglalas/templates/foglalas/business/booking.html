@@ -1,0 +1,196 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}{{ business.name }} - Időpontfoglalás{% endblock %}
+
+{% block extra_css %}
+<style>
+    .booking-form {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="booking-form">
+            <h2 class="text-center mb-4">Időpontfoglalás - {{ business.name }}</h2>
+            
+            <form id="bookingForm">
+                <input type="hidden" id="business" value="{{ business.slug }}">
+                
+                <!-- Service Selection -->
+                <div class="mb-3">
+                    <label for="service" class="form-label">Szolgáltatás típusa</label>
+                    <select class="form-select" id="service" name="service" required>
+                        <option value="">Válasszon szolgáltatást</option>
+                        {% for service in services %}
+                            <option value="{{ service.id }}" data-duration="{{ service.duration }}" data-price="{{ service.price }}">
+                                {{ service.name }} - {{ service.duration }} perc - {{ service.price }} Ft
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Customer Information -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Név</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Telefonszám</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                
+                <!-- Date and Time Selection -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Dátum</label>
+                            <input type="text" class="form-control" id="date" name="date" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="time" class="form-label">Időpont</label>
+                            <select class="form-select" id="time" name="time" required>
+                                <option value="">Először válasszon dátumot</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notes -->
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Megjegyzés (opcionális)</label>
+                    <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Ha van valamilyen különleges kérése..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 btn-lg">
+                    <i class="fas fa-calendar-check me-2"></i>Foglalás leadása
+                </button>
+            </form>
+            
+            <!-- Success Message -->
+            <div id="confirmation" class="alert alert-success mt-4 d-none">
+                <h5><i class="fas fa-check-circle me-2"></i>Sikeres foglalás!</h5>
+                <p class="mb-0">Köszönjük foglalását! Hamarosan kapcsolatba lépünk Önnel a részletek egyeztetéséhez.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const businessSlug = document.getElementById("business").value;
+
+    // Initialize date picker
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        maxDate: new Date().fp_incr({{ business.settings.booking_advance_days|default:30 }}),
+        onChange: function (selectedDates, dateStr) {
+            if (dateStr) {
+                fetchAvailableTimes(businessSlug, dateStr);
+            }
+        }
+    });
+
+    // Fetch available times
+    function fetchAvailableTimes(business, date) {
+        fetch(`/api/available-times/?business=${business}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                const timeSelect = document.getElementById("time");
+                timeSelect.innerHTML = '<option value="">Válassz időpontot</option>';
+                
+                if (data.times && data.times.length > 0) {
+                    data.times.forEach(time => {
+                        const option = document.createElement("option");
+                        option.value = time;
+                        option.textContent = time;
+                        timeSelect.appendChild(option);
+                    });
+                } else {
+                    timeSelect.innerHTML = '<option value="">Ezen a napon nincsenek szabad időpontok</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching times:', error);
+                document.getElementById("time").innerHTML = '<option value="">Hiba történt az időpontok betöltésekor</option>';
+            });
+    }
+
+    // Handle form submission
+    document.getElementById("bookingForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = {
+            business: businessSlug,
+            service: document.getElementById("service").value,
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value,
+            notes: document.getElementById("notes").value
+        };
+
+        fetch('/api/book-appointment/', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                document.getElementById("confirmation").classList.remove("d-none");
+                document.getElementById("bookingForm").reset();
+                // Scroll to confirmation message
+                document.getElementById("confirmation").scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Hiba történt a foglalás során: ' + (data.message || 'Ismeretlen hiba'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hiba történt a foglalás során. Kérjük próbálja újra!');
+        });
+    });
+
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}Bejelentkezés{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Bejelentkezés</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Felhasználónév</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Jelszó</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Bejelentkezés</button>
+                </form>
+                
+                <hr>
+                <div class="text-center">
+                    <p class="mb-0">Még nincs fiókja?</p>
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary">Regisztráció</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
