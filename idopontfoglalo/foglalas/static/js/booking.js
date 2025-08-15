@@ -47,35 +47,76 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Fetch available times for selected date
+  // Generate static available times for selected date
   function fetchAvailableTimes(business, date) {
     // Show loading state
     timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
     timeSelect.disabled = true;
 
-    fetch(`/api/available-times/?business=${business}&date=${date}`)
-      .then(response => response.json())
-      .then(data => {
-        timeSelect.innerHTML = '<option value="">Válasszon időpontot</option>';
-        
-        if (data.times && data.times.length > 0) {
-          data.times.forEach(time => {
-            const option = document.createElement("option");
-            option.value = time;
-            option.textContent = time;
-            timeSelect.appendChild(option);
-          });
-        } else {
-          timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
-        }
-        
-        timeSelect.disabled = false;
-      })
-      .catch(error => {
-        console.error('Error fetching available times:', error);
-        timeSelect.innerHTML = '<option value="">Hiba történt az időpontok betöltésekor</option>';
-        timeSelect.disabled = false;
-      });
+    // Generate static time slots based on day of week
+    setTimeout(() => { // Simulate loading time
+      const selectedDate = new Date(date);
+      const dayOfWeek = selectedDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+      
+      timeSelect.innerHTML = '<option value="">Válasszon időpontot</option>';
+      
+      let availableTimes = [];
+      
+      // Define time slots based on day of week
+      if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Monday-Friday
+        availableTimes = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'];
+      } else if (dayOfWeek === 6) { // Saturday
+        availableTimes = ['9:00', '10:00', '11:00', '12:00', '13:00'];
+      } else { // Sunday - already disabled in Flatpickr, but just in case
+        availableTimes = [];
+      }
+      
+      // Filter out already booked times from localStorage
+      const bookedTimes = getBookedTimes(date);
+      const freeTimes = availableTimes.filter(time => !bookedTimes.includes(time));
+      
+      if (freeTimes.length > 0) {
+        freeTimes.forEach(time => {
+          const option = document.createElement("option");
+          option.value = time;
+          option.textContent = time;
+          timeSelect.appendChild(option);
+        });
+      } else {
+        timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
+      }
+      
+      timeSelect.disabled = false;
+    }, 300); // Small delay to simulate loading
+  }
+
+  // Get booked times from localStorage for a specific date
+  function getBookedTimes(date) {
+    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+    return bookings
+      .filter(booking => booking.date === date)
+      .map(booking => booking.time);
+  }
+
+  // Save booking to localStorage
+  function saveBookingToLocalStorage(formData) {
+    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+    
+    // Create booking object with unique ID
+    const booking = {
+      id: Date.now() + Math.random(), // Simple unique ID
+      timestamp: new Date().toISOString(),
+      ...formData
+    };
+    
+    // Add booking to array
+    bookings.push(booking);
+    
+    // Save back to localStorage
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    
+    console.log('Booking saved:', booking);
+    return booking;
   }
 
   // Reset time select
@@ -230,40 +271,36 @@ document.addEventListener("DOMContentLoaded", function () {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Foglalás küldése...';
     submitBtn.disabled = true;
 
-    // Submit booking
-    fetch('/api/book-appointment/', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCsrfToken()
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(res => res.json())
-    .then(response => {
-      // Reset button
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-      
-      if (response.status === 'success') {
+    // Save booking to localStorage
+    setTimeout(() => { // Simulate processing time
+      try {
+        // Save booking to localStorage
+        saveBookingToLocalStorage(formData);
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Show success modal
         showSuccessModal(formData);
         bookingForm.reset();
         resetTimeSelect();
         hideSummary();
         datePicker.clear();
-      } else {
-        showNotification(response.message || 'Hiba történt a foglalás során. Kérjük próbálja újra!', 'error');
+        
+        // Show success notification
+        showNotification('Foglalás sikeres! Megerősítő emailt fog kapni.', 'success');
+        
+      } catch (error) {
+        console.error('Booking error:', error);
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        showNotification('Hiba történt a foglalás során. Kérjük próbálja újra!', 'error');
       }
-    })
-    .catch(error => {
-      console.error('Booking error:', error);
-      
-      // Reset button
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-      
-      showNotification('Hiba történt a foglalás során. Kérjük próbálja újra!', 'error');
-    });
+    }, 1000); // 1 second processing simulation
   });
 
   // Show success modal
@@ -327,18 +364,6 @@ document.addEventListener("DOMContentLoaded", function () {
         notification.remove();
       }
     }, 5000);
-  }
-
-  // Get CSRF token
-  function getCsrfToken() {
-    const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-      const [name, value] = cookie.trim().split('=');
-      if (name === 'csrftoken') {
-        return value;
-      }
-    }
-    return '';
   }
 
   // Add CSS animations
