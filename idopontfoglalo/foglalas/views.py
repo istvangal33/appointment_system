@@ -1,13 +1,46 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Appointment, Business
+from .models import Appointment, Business, Service
 from datetime import time
 import json
 from datetime import time, datetime
 
+# Homepage view
+def index(request):
+    """Homepage - Hero section with service overview"""
+    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    services = Service.objects.filter(business=business)[:4] if business else []
+    return render(request, 'foglalas/index.html', {
+        'business': business,
+        'services': services
+    })
+
+# About page view  
+def about(request):
+    """About page - Salon details, philosophy, services with prices"""
+    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    services = Service.objects.filter(business=business) if business else []
+    return render(request, 'foglalas/about.html', {
+        'business': business,
+        'services': services
+    })
+
+# Contact page view
+def contact(request):
+    """Contact page - Contact info, hours, map, contact form"""
+    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    return render(request, 'foglalas/contact.html', {
+        'business': business
+    })
+
+# Updated booking form view
 def foglalas_form(request):
-    return render(request, 'foglalas/book.html')
+    """Booking form for massage salon"""
+    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    return render(request, 'foglalas/book.html', {
+        'business': business
+    })
 
 
 

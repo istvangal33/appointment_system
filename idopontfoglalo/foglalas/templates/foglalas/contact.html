@@ -1,0 +1,653 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapcsolat - {{ business.name }}</title>
+    <meta name="description" content="Vegye fel velünk a kapcsolatot! {{ business.name }} - {{ business.address }}, telefon: {{ business.phone }}, email: {{ business.email }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <span class="brand-name">Harmónia</span>
+                <span class="brand-subtitle">Masszázs Szalon</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Főoldal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">Bemutatkozás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'contact' %}">Kapcsolat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2 px-3" href="{% url 'foglalas_form' %}">Időpont foglalás</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="contact-hero py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="hero-title">Kapcsolat</h1>
+                    <p class="hero-subtitle">Várjuk Önt szeretettel! Vegye fel velünk a kapcsolatot, vagy látogasson el szalonunkba.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="contact-info py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Address -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4>Címünk</h4>
+                        <p>{{ business.address }}</p>
+                        <a href="https://maps.google.com/?q={{ business.address|urlencode }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-external-link-alt me-2"></i>Útvonaltervező
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h4>Telefonszám</h4>
+                        <p>{{ business.phone }}</p>
+                        <a href="tel:{{ business.phone }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-phone me-2"></i>Hívás
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4>Email</h4>
+                        <p>{{ business.email }}</p>
+                        <a href="mailto:{{ business.email }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-envelope me-2"></i>E-mail küldés
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opening Hours -->
+    <section class="opening-hours py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="section-title text-center">Nyitvatartás</h2>
+                    <p class="section-subtitle text-center">Időpontfoglalás szükséges minden kezeléshez</p>
+                    
+                    <div class="hours-grid mt-5">
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="hours-card">
+                                    <h5><i class="fas fa-calendar-week me-2"></i>Hétköznap</h5>
+                                    <div class="hours-details">
+                                        <div class="day-hours">
+                                            <span class="day">Hétfő</span>
+                                            <span class="hours">10:00 - 19:00</span>
+                                        </div>
+                                        <div class="day-hours">
+                                            <span class="day">Kedd</span>
+                                            <span class="hours">10:00 - 19:00</span>
+                                        </div>
+                                        <div class="day-hours">
+                                            <span class="day">Szerda</span>
+                                            <span class="hours">10:00 - 19:00</span>
+                                        </div>
+                                        <div class="day-hours">
+                                            <span class="day">Csütörtök</span>
+                                            <span class="hours">10:00 - 19:00</span>
+                                        </div>
+                                        <div class="day-hours">
+                                            <span class="day">Péntek</span>
+                                            <span class="hours">10:00 - 19:00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hours-card">
+                                    <h5><i class="fas fa-calendar-alt me-2"></i>Hétvége</h5>
+                                    <div class="hours-details">
+                                        <div class="day-hours">
+                                            <span class="day">Szombat</span>
+                                            <span class="hours">10:00 - 17:00</span>
+                                        </div>
+                                        <div class="day-hours closed">
+                                            <span class="day">Vasárnap</span>
+                                            <span class="hours">Zárva</span>
+                                        </div>
+                                    </div>
+                                    <div class="hours-note">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <small>Vasárnap pihenőnap, de sürgős esetben hívható a fenti telefonszám.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h2 class="section-title text-center">Megközelíthetőség</h2>
+                    <p class="section-subtitle text-center">Szalonunk Budapest belvárosában található, könnyen megközelíthető tömegközlekedéssel</p>
+                    
+                    <div class="map-container mt-5">
+                        <!-- Google Maps Embed -->
+                        <div class="map-embed">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.5834712265567!2d19.05378337664794!3d47.49811997117944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc14c4c9e6eb%3A0x3f9a6f6c9b4e0e0f!2sDeák%20Ferenc%20u.%2015%2C%201051!5e0!3m2!1shu!2shu!4v1700000000000!5m2!1shu!2shu" 
+                                width="100%" 
+                                height="400" 
+                                style="border:0; border-radius: 15px;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        
+                        <!-- Transportation Info -->
+                        <div class="transportation-info mt-4">
+                            <div class="row g-4">
+                                <div class="col-lg-4">
+                                    <div class="transport-card">
+                                        <i class="fas fa-subway"></i>
+                                        <h5>Metro</h5>
+                                        <p>M1, M2, M3 - Deák Ferenc tér<br><small>3 perces séta</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="transport-card">
+                                        <i class="fas fa-bus"></i>
+                                        <h5>Busz</h5>
+                                        <p>5, 7, 8, 9, 15 számú buszok<br><small>Deák Ferenc tér megálló</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="transport-card">
+                                        <i class="fas fa-car"></i>
+                                        <h5>Parkolás</h5>
+                                        <p>Fizetős parkolás<br><small>Övezetes parkolás a közelben</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-form-section py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="section-title text-center">Írjon nekünk</h2>
+                    <p class="section-subtitle text-center">Kérdése van? Küldje el üzenetét, és 24 órán belül válaszolunk!</p>
+                    
+                    <div class="contact-form mt-5">
+                        <form id="contactForm">
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">
+                                            <i class="fas fa-user me-2"></i>Név *
+                                        </label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">
+                                            <i class="fas fa-envelope me-2"></i>Email cím *
+                                        </label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">
+                                            <i class="fas fa-phone me-2"></i>Telefonszám
+                                        </label>
+                                        <input type="tel" class="form-control" id="phone" name="phone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">
+                                            <i class="fas fa-tag me-2"></i>Tárgy
+                                        </label>
+                                        <select class="form-select" id="subject" name="subject">
+                                            <option value="">Válassza ki a témát</option>
+                                            <option value="appointment">Időpontfoglalás</option>
+                                            <option value="services">Szolgáltatások</option>
+                                            <option value="prices">Árak</option>
+                                            <option value="gift">Ajándékutalvány</option>
+                                            <option value="other">Egyéb</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="message" class="form-label">
+                                            <i class="fas fa-comment me-2"></i>Üzenet *
+                                        </label>
+                                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Írja ide kérdését vagy üzenetét..." required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
+                                        <label class="form-check-label" for="privacy">
+                                            Elfogadom az adatkezelési tájékoztatót és hozzájárulok személyes adataim kezeléséhez *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-paper-plane me-2"></i>Üzenet küldése
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div id="formMessage" class="alert d-none mt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="section-title text-center">Gyakori kérdések</h2>
+                    <p class="section-subtitle text-center">A leggyakrabban feltett kérdések és válaszok</p>
+                    
+                    <div class="accordion mt-5" id="faqAccordion">
+                        <!-- FAQ Item 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                    <i class="fas fa-calendar-check me-2"></i>Hogyan foglalhatok időpontot?
+                                </button>
+                            </h2>
+                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Időpontot foglalhat online rendszerünkön keresztül, telefonon, vagy emailben. Online foglalás esetén azonnal visszaigazolást kap az időpontról.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                    <i class="fas fa-clock me-2"></i>Mennyi idővel előre kell foglalni?
+                                </button>
+                            </h2>
+                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Javasoljuk, hogy legalább 2-3 nappal előre foglalja az időpontot. Hétvégi időpontokra akár egy héttel előre is érdemes jelentkezni.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                    <i class="fas fa-credit-card me-2"></i>Milyen fizetési módokat fogadnak el?
+                                </button>
+                            </h2>
+                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Készpénz és bankkártya egyaránt elfogadható. Számlát minden kezelésről kiállítunk.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                    <i class="fas fa-times-circle me-2"></i>Mit tegyek, ha le kell mondanom az időpontot?
+                                </button>
+                            </h2>
+                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Kérjük, legalább 24 órával előre jelezze a lemondást telefonon vagy emailben. Így más vendégünk is lehetőséget kap az időpontra.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                    <i class="fas fa-gift me-2"></i>Lehet ajándékutalványt vásárolni?
+                                </button>
+                            </h2>
+                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Igen! Ajándékutalványokat személyesen szalonunkban vagy telefonon keresztül vásárolhat. Az utalványok 6 hónapig érvényesek.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="cta-title text-white">Készen áll a relaxációra?</h2>
+                    <p class="cta-subtitle text-white">Foglaljon időpontot még ma és engedje, hogy gondoskodjunk Önről!</p>
+                    <div class="cta-buttons">
+                        <a href="{% url 'foglalas_form' %}" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-calendar-check me-2"></i>Online foglalás
+                        </a>
+                        <a href="tel:{{ business.phone }}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-phone me-2"></i>{{ business.phone }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>{{ business.name }}</h5>
+                    <p class="text-muted">{{ business.description }}</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Elérhetőségek</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>{{ business.address }}</p>
+                        <p><i class="fas fa-phone me-2"></i>{{ business.phone }}</p>
+                        <p><i class="fas fa-envelope me-2"></i>{{ business.email }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Nyitvatartás</h5>
+                    <div class="opening-hours">
+                        <p>Hétfő - Péntek: 10:00 - 19:00</p>
+                        <p>Szombat: 10:00 - 17:00</p>
+                        <p>Vasárnap: Zárva</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">&copy; 2024 {{ business.name }}. Minden jog fenntartva.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="{% url 'foglalas_form' %}" class="btn btn-primary">Időpont foglalás</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/contact.js' %}"></script>
+</body>
+
+<style>
+    .contact-hero {
+        background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+        padding: 4rem 0 2rem;
+    }
+
+    .contact-card {
+        text-align: center;
+        padding: 2.5rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow-hover);
+    }
+
+    .contact-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+
+    .contact-icon i {
+        font-size: 2rem;
+        color: white;
+    }
+
+    .contact-card h4 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .hours-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--box-shadow);
+        height: 100%;
+    }
+
+    .hours-card h5 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--beige);
+    }
+
+    .day-hours {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .day-hours.closed {
+        opacity: 0.6;
+    }
+
+    .day-hours .day {
+        font-weight: 500;
+        color: var(--text-dark);
+    }
+
+    .day-hours .hours {
+        color: var(--secondary-color);
+        font-weight: 500;
+    }
+
+    .hours-note {
+        margin-top: 1rem;
+        padding: 0.8rem;
+        background: var(--beige);
+        border-radius: 8px;
+        color: var(--text-light);
+    }
+
+    .map-embed {
+        box-shadow: var(--box-shadow);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .transport-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .transport-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .transport-card i {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .transport-card h5 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .contact-form {
+        background: white;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: var(--box-shadow);
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary-color);
+    }
+
+    .form-control,
+    .form-select {
+        border: 2px solid var(--border-light);
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(139, 115, 85, 0.25);
+    }
+
+    .accordion-item {
+        border: 1px solid var(--border-light);
+        border-radius: 10px !important;
+        margin-bottom: 1rem;
+        box-shadow: var(--box-shadow);
+    }
+
+    .accordion-button {
+        background: white;
+        border: none;
+        color: var(--text-dark);
+        font-weight: 500;
+        padding: 1.5rem;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: var(--beige);
+        color: var(--primary-color);
+        box-shadow: none;
+    }
+
+    .accordion-button i {
+        color: var(--primary-color);
+    }
+
+    .accordion-body {
+        padding: 1.5rem;
+        background: white;
+        border-top: 1px solid var(--border-light);
+    }
+
+    @media (max-width: 768px) {
+        .contact-form {
+            padding: 2rem 1.5rem;
+        }
+        
+        .hours-card,
+        .contact-card {
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons .btn {
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+    }
+</style>
+
+</html>

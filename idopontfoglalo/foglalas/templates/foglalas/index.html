@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business.name }} - Professzionális masszázs szolgáltatások Budapest belvárosában</title>
+    <meta name="description" content="Professzionális masszázs szolgáltatások Budapest belvárosában. Svéd, Thai, relaxációs és aromaterápiás masszázs. Foglaljon időpontot online!">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <span class="brand-name">Harmónia</span>
+                <span class="brand-subtitle">Masszázs Szalon</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">Főoldal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">Bemutatkozás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Kapcsolat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2 px-3" href="{% url 'foglalas_form' %}">Időpont foglalás</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="hero-content">
+                            <h1 class="hero-title">Találja meg a belső harmóniát</h1>
+                            <p class="hero-subtitle">Professzionális masszázs szolgáltatások Budapest szívében. Tapasztalt masszőrök, nyugtató környezet, személyre szabott kezelések.</p>
+                            <div class="hero-buttons">
+                                <a href="{% url 'foglalas_form' %}" class="btn btn-primary btn-lg me-3">
+                                    <i class="fas fa-calendar-check me-2"></i>Időpont foglalás
+                                </a>
+                                <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">
+                                    Szolgáltatásaink
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hero-image">
+                            <div class="floating-card">
+                                <i class="fas fa-spa card-icon"></i>
+                                <h5>Relaxáció</h5>
+                                <p>Teljes körű ellazulás</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="services-overview py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="section-title">Szolgáltatásaink</h2>
+                    <p class="section-subtitle">Válasszon széles szolgáltatási kínálatunkból, minden kezelést tapasztalt masszőrök végeznek</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for service in services %}
+                <div class="col-lg-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            {% if 'Svéd' in service.name %}
+                                <i class="fas fa-hands-healing"></i>
+                            {% elif 'Relaxációs' in service.name %}
+                                <i class="fas fa-spa"></i>
+                            {% elif 'Thai' in service.name %}
+                                <i class="fas fa-yin-yang"></i>
+                            {% else %}
+                                <i class="fas fa-leaf"></i>
+                            {% endif %}
+                        </div>
+                        <div class="service-content">
+                            <h4>{{ service.name|cut:" (60 perc - 8,000 Ft)"|cut:" (90 perc - 12,000 Ft)"|cut:" (75 perc - 10,000 Ft)"|cut:" (60 perc - 9,000 Ft)" }}</h4>
+                            <p class="service-duration">{{ service.duration }} perc</p>
+                            <p class="service-description">
+                                {% if 'Svéd' in service.name %}
+                                    Klasszikus masszázs technika a izmok ellazítására és a feszültség oldására.
+                                {% elif 'Relaxációs' in service.name %}
+                                    Teljes körű ellazulás lágy, nyugtató mozdulatokkal.
+                                {% elif 'Thai' in service.name %}
+                                    Hagyományos thai technikák nyújtással és akupresszúrával.
+                                {% else %}
+                                    Aromás olajokkal végzett masszázs a teljes harmonizálásért.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center mt-5">
+                <a href="{% url 'about' %}" class="btn btn-outline-primary btn-lg">
+                    Részletes szolgáltatások
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose-us py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center mb-5">
+                    <h2 class="section-title">Miért válasszon minket?</h2>
+                    <p class="section-subtitle">Több mint 10 éves tapasztalat a masszázs és wellness területén</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h4>Szakképzett masszőrök</h4>
+                        <p>Minden masszőrünk szakképzett és tapasztalt, folyamatosan képezzük őket.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h4>Személyre szabott</h4>
+                        <p>Minden kezelés az Ön egyéni igényeihez és problémáihoz igazodik.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h4>Természetes anyagok</h4>
+                        <p>Csak a legjobb minőségű, természetes olajokat és anyagokat használjuk.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="cta-title text-white">Foglaljon időpontot még ma!</h2>
+                    <p class="cta-subtitle text-white">Hagyja, hogy szakértő masszőreink segítsenek Önnek megtalálni a teljes ellazulást</p>
+                    <div class="cta-buttons">
+                        <a href="{% url 'foglalas_form' %}" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-calendar-check me-2"></i>Online foglalás
+                        </a>
+                        <a href="tel:{{ business.phone }}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-phone me-2"></i>Telefonos foglalás
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>{{ business.name }}</h5>
+                    <p class="text-muted">{{ business.description }}</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Elérhetőségek</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>{{ business.address }}</p>
+                        <p><i class="fas fa-phone me-2"></i>{{ business.phone }}</p>
+                        <p><i class="fas fa-envelope me-2"></i>{{ business.email }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Nyitvatartás</h5>
+                    <div class="opening-hours">
+                        <p>Hétfő - Péntek: 10:00 - 19:00</p>
+                        <p>Szombat: 10:00 - 17:00</p>
+                        <p>Vasárnap: Zárva</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">&copy; 2024 {{ business.name }}. Minden jog fenntartva.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="{% url 'foglalas_form' %}" class="btn btn-primary">Időpont foglalás</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
