@@ -53,8 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
     timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
     timeSelect.disabled = true;
 
-    fetch(`/api/available-times/?business=${business}&date=${date}`)
-      .then(response => response.json())
+    // URL encode parameters
+    const encodedBusiness = encodeURIComponent(business);
+    const encodedDate = encodeURIComponent(date);
+
+    fetch(`/api/available-times/?business=${encodedBusiness}&date=${encodedDate}`, {
+      headers: { 
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
         timeSelect.innerHTML = '<option value="">Válasszon időpontot</option>';
         
@@ -65,6 +78,17 @@ document.addEventListener("DOMContentLoaded", function () {
             option.textContent = time;
             timeSelect.appendChild(option);
           });
+        } else if (data.error) {
+          // Show specific error message based on error code
+          let errorMessage = 'Nincs szabad időpont ezen a napon';
+          if (data.error === 'missing-params') {
+            errorMessage = 'Hiányzó paraméterek';
+          } else if (data.error === 'unknown-business') {
+            errorMessage = 'Ismeretlen szolgáltató';
+          } else if (data.error === 'bad-date') {
+            errorMessage = 'Érvénytelen dátum';
+          }
+          timeSelect.innerHTML = `<option value="">${errorMessage}</option>`;
         } else {
           timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
         }
