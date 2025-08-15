@@ -1,0 +1,146 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}SuperAdmin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Header -->
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>SuperAdmin Dashboard</h2>
+            <a href="/admin/" class="btn btn-primary">
+                <i class="fas fa-cogs me-2"></i>Django Admin
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Statistics Cards -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Vállalkozások</h5>
+                        <h2 class="mb-0">{{ businesses.count }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-building fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Összes foglalás</h5>
+                        <h2 class="mb-0">{{ total_appointments }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Összes felhasználó</h5>
+                        <h2 class="mb-0">{{ total_users }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Businesses List -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Vállalkozások áttekintése</h5>
+                <a href="/admin/foglalas/business/add/" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Új vállalkozás
+                </a>
+            </div>
+            <div class="card-body">
+                {% if businesses %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Név</th>
+                                    <th>Slug</th>
+                                    <th>Email</th>
+                                    <th>Telefon</th>
+                                    <th>Szolgáltatások</th>
+                                    <th>Foglalások</th>
+                                    <th>Műveletek</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for business in businesses %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ business.name }}</strong><br>
+                                        <small class="text-muted">{{ business.description|truncatewords:8 }}</small>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'business_home' business.slug %}" target="_blank">
+                                            {{ business.slug }}
+                                        </a>
+                                    </td>
+                                    <td>{{ business.email }}</td>
+                                    <td>{{ business.phone }}</td>
+                                    <td>
+                                        <span class="badge bg-secondary">
+                                            {{ business.service_set.count }} db
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary">
+                                            {{ business.appointment_set.count }} db
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="{% url 'business_home' business.slug %}" 
+                                               class="btn btn-outline-primary" target="_blank">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="/admin/foglalas/business/{{ business.id }}/change/" 
+                                               class="btn btn-outline-secondary">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-building fa-3x mb-3"></i>
+                        <h5>Nincsenek vállalkozások</h5>
+                        <p>Kezdj el új vállalkozások hozzáadásával!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

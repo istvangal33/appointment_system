@@ -1,0 +1,199 @@
+{% extends 'foglalas/base.html' %}
+
+{% block title %}{{ business.name }} - Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Header -->
+    <div class="col-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Admin Dashboard - {{ business.name }}</h2>
+            <a href="{% url 'business_home' business.slug %}" class="btn btn-outline-primary">
+                <i class="fas fa-eye me-2"></i>Weboldal megtekintése
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Statistics Cards -->
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Összes foglalás</h5>
+                        <h2 class="mb-0">{{ total_appointments }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-calendar-alt fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Függő foglalások</h5>
+                        <h2 class="mb-0">{{ pending_appointments }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-clock fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title">Szolgáltatások</h5>
+                        <h2 class="mb-0">{{ business.service_set.count }}</h2>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-cogs fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Appointments -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Legutóbbi foglalások</h5>
+                <a href="/admin/" class="btn btn-sm btn-outline-primary">Összes megtekintése</a>
+            </div>
+            <div class="card-body">
+                {% if recent_appointments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Név</th>
+                                    <th>Szolgáltatás</th>
+                                    <th>Dátum</th>
+                                    <th>Időpont</th>
+                                    <th>Státusz</th>
+                                    <th>Műveletek</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in recent_appointments %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ appointment.name }}</strong><br>
+                                        <small class="text-muted">{{ appointment.email }}</small>
+                                    </td>
+                                    <td>{{ appointment.service.name|default:"Nincs megadva" }}</td>
+                                    <td>{{ appointment.date|date:"Y. m. d." }}</td>
+                                    <td>{{ appointment.time|time:"H:i" }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if appointment.status == 'pending' %}bg-warning
+                                            {% elif appointment.status == 'confirmed' %}bg-success
+                                            {% elif appointment.status == 'completed' %}bg-info
+                                            {% elif appointment.status == 'cancelled' %}bg-danger
+                                            {% endif %}">
+                                            {{ appointment.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-outline-success" 
+                                                    onclick="updateAppointmentStatus({{ appointment.id }}, 'confirmed')">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger" 
+                                                    onclick="updateAppointmentStatus({{ appointment.id }}, 'cancelled')">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-calendar fa-3x mb-3"></i>
+                        <h5>Nincsenek foglalások</h5>
+                        <p>Várjuk az első foglalást!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Gyors műveletek</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/admin/foglalas/appointment/add/" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Új foglalás
+                    </a>
+                    <a href="/admin/foglalas/service/" class="btn btn-outline-primary">
+                        <i class="fas fa-cogs me-2"></i>Szolgáltatások kezelése
+                    </a>
+                    <a href="/admin/foglalas/businesshours/" class="btn btn-outline-primary">
+                        <i class="fas fa-clock me-2"></i>Nyitvatartás beállítása
+                    </a>
+                    <a href="/admin/foglalas/business/{{ business.id }}/change/" class="btn btn-outline-primary">
+                        <i class="fas fa-edit me-2"></i>Vállalkozás szerkesztése
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Business Info -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">Vállalkozás információk</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Név:</strong> {{ business.name }}</p>
+                <p><strong>Slug:</strong> {{ business.slug }}</p>
+                <p><strong>Email:</strong> {{ business.email }}</p>
+                <p><strong>Telefon:</strong> {{ business.phone }}</p>
+                <p><strong>Cím:</strong> {{ business.address }}</p>
+                
+                <hr>
+                <h6>Beállítások</h6>
+                {% if business.settings %}
+                    <p><small>Foglalható napok előre: {{ business.settings.booking_advance_days }}</small></p>
+                    <p><small>Min. értesítési idő: {{ business.settings.min_booking_notice_hours }} óra</small></p>
+                    <p><small>Email értesítések: {% if business.settings.enable_email_notifications %}✅{% else %}❌{% endif %}</small></p>
+                {% else %}
+                    <p><small class="text-muted">Nincsenek egyedi beállítások</small></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function updateAppointmentStatus(appointmentId, status) {
+    if (confirm('Biztosan módosítani szeretné a foglalás státuszát?')) {
+        // In a real implementation, this would send an AJAX request to update the status
+        alert('Státusz frissítés - ezt a funkciót később implementáljuk!');
+    }
+}
+</script>
+{% endblock %}
