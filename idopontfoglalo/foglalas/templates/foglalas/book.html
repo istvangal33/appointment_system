@@ -1,50 +1,175 @@
+{% extends 'foglalas/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-  <meta charset="UTF-8">
-  <title>Időpontfoglalás</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
-  <style>
-    body { background-color: #f8f9fa; }
-    .container { max-width: 600px; margin-top: 50px; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2 class="mb-4 text-center">Időpontfoglalás</h2>
-    <form id="bookingForm" class="p-4 border rounded bg-white shadow-sm">
-      <input type="hidden" id="business" value="{{ business.slug }}">
 
-      <div class="mb-3">
-        <label for="date" class="form-label">Dátum</label>
-        <input type="text" class="form-control" id="date" name="date">
-      </div>
-      <div class="mb-3">
-        <label for="time" class="form-label">Időpont</label>
-        <select class="form-select" id="time" name="time">
-          <option value="">Válassz időpontot</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="name" class="form-label">Név</label>
-        <input type="text" class="form-control" id="name" name="name">
-      </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label">Telefon</label>
-        <input type="text" class="form-control" id="phone" name="phone">
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email">
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Foglalás</button>
-    </form>
-    <div id="confirmation" class="alert alert-success mt-4 d-none">Foglalás sikeres!</div>
-  </div>
+{% block title %}Időpontfoglalás{% endblock %}
 
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="{% static 'js/booking.js' %}"></script>
-</body>
-</html>
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="bi bi-calendar-plus"></i> Időpontfoglalás</h4>
+            </div>
+            <div class="card-body">
+                <form id="bookingForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="business" class="form-label">Vállalkozás *</label>
+                        <select class="form-select" id="business" name="business" required>
+                            <option value="">Válasszon vállalkozást</option>
+                            {% for business in businesses %}
+                                <option value="{{ business.slug }}" 
+                                    {% if request.GET.business == business.slug %}selected{% endif %}>
+                                    {{ business.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Dátum *</label>
+                        <input type="text" class="form-control" id="date" name="date" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Időpont *</label>
+                        <select class="form-select" id="time" name="time" required>
+                            <option value="">Válassz időpontot</option>
+                        </select>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Név *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Telefon *</label>
+                                <input type="text" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-calendar-check"></i> Foglalás leadása
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="confirmation" class="alert alert-success mt-4 d-none">
+            <i class="bi bi-check-circle"></i> Foglalás sikeres! Hamarosan értesítjük Önt.
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Initialize flatpickr
+    flatpickr("#date", {
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        onChange: function (selectedDates, dateStr) {
+            const business = document.getElementById("business").value;
+            if (business) {
+                fetchAvailableTimes(business, dateStr);
+            }
+        }
+    });
+
+    // Business change handler
+    document.getElementById("business").addEventListener("change", function() {
+        const date = document.getElementById("date").value;
+        if (date) {
+            fetchAvailableTimes(this.value, date);
+        }
+    });
+
+    function fetchAvailableTimes(business, date) {
+        if (!business || !date) return;
+        
+        fetch(`/api/available-times/?business=${business}&date=${date}`)
+            .then(response => response.json())
+            .then(data => {
+                const timeSelect = document.getElementById("time");
+                timeSelect.innerHTML = '<option value="">Válassz időpontot</option>';
+                
+                if (data.times && data.times.length > 0) {
+                    data.times.forEach(time => {
+                        const option = document.createElement("option");
+                        option.value = time;
+                        option.textContent = time;
+                        timeSelect.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement("option");
+                    option.value = "";
+                    option.textContent = "Nincs elérhető időpont";
+                    option.disabled = true;
+                    timeSelect.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching available times:', error);
+            });
+    }
+
+    // Form submission
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const data = {
+            business: document.getElementById("business").value,
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value
+        };
+
+        fetch('/api/book-appointment/', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === 'success') {
+                document.getElementById("confirmation").classList.remove("d-none");
+                document.getElementById("bookingForm").reset();
+                document.getElementById("time").innerHTML = '<option value="">Válassz időpontot</option>';
+            } else {
+                alert('Hiba a foglalás során: ' + (response.message || 'Ismeretlen hiba'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hiba történt a foglalás során');
+        });
+    });
+});
+</script>
+{% endblock %}
