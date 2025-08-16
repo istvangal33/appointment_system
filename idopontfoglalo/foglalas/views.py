@@ -73,7 +73,7 @@ def book_appointment(request):
     return JsonResponse({'status': 'error', 'message': 'Csak POST kérés engedélyezett'}, status=400)
 
 def get_available_times(request):
-    """API endpoint to get available appointment times"""
+    """API endpoint to get available appointment times - Simple 8-16 hourly slots"""
     slug = request.GET.get('business')
     date_str = request.GET.get('date')
 
@@ -90,11 +90,10 @@ def get_available_times(request):
     except ValueError:
         return JsonResponse({'times': [], 'error': 'bad-date'}, status=400)
 
-    # Generate 30-minute time slots from 10:00 to 17:30
+    # Generate simple hourly time slots from 8:00 to 16:00 (8 AM to 4 PM)
     all_times = []
-    for h in range(10, 18):  # 10:00 to 17:30
-        for m in (0, 30):
-            all_times.append(time(hour=h, minute=m))
+    for hour in range(8, 17):  # 8:00 to 16:00
+        all_times.append(time(hour=hour, minute=0))
 
     # Get booked times for this business and date
     booked_times = set(
