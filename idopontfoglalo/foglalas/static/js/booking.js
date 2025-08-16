@@ -10,8 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedDateTime = document.getElementById("selectedDateTime");
   const dateTimeSummary = document.getElementById("dateTimeSummary");
 
-  // Initialize Flatpickr for date selection
-  const datePicker = flatpickr(dateInput, {
+  console.log('Booking system initialization started');
+  console.log('Business slug:', business);
+
+  // Initialize Flatpickr for date selection (with fallback)
+  let datePicker = null;
+  if (typeof flatpickr !== 'undefined') {
+    datePicker = flatpickr(dateInput, {
     dateFormat: "Y-m-d",
     minDate: "today",
     maxDate: new Date().fp_incr(90), // Allow booking up to 90 days ahead
@@ -46,27 +51,53 @@ document.addEventListener("DOMContentLoaded", function () {
       instance.calendarContainer.classList.add('flatpickr-custom');
     }
   });
+  console.log('Flatpickr initialized successfully');
+  } else {
+    console.warn('Flatpickr not available, using fallback date input');
+    // Fallback: use regular date input with manual change handler
+    dateInput.type = 'date';
+    dateInput.addEventListener('change', function() {
+      const dateStr = this.value;
+      if (dateStr) {
+        fetchAvailableTimes(business, dateStr);
+        updateSummary();
+      } else {
+        resetTimeSelect();
+        hideSummary();
+      }
+    });
+  }
 
   function fetchAvailableTimes(business, date) {
-    const timeSelect = document.getElementById('time-select') || document.getElementById('time');
+    const timeSelect = document.getElementById('time');
+    if (!timeSelect) {
+      console.error('Time select element not found');
+      return;
+    }
+    
+    console.log('Fetching available times for:', { business, date });
     
     // Show loading state
     timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
     timeSelect.disabled = true;
 
     const url = `/api/available-times/?business=${encodeURIComponent(business)}&date=${encodeURIComponent(date)}`;
+    console.log('API URL:', url);
 
     fetch(url, { 
       headers: { 'Accept': 'application/json' },
       method: 'GET'
     })
       .then(response => {
+        console.log('API Response status:', response.status);
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         return response.json();
       })
       .then(data => {
+        console.log('API Response data:', data);
+        
         // Clear loading state
         timeSelect.innerHTML = '<option value="">Válasszon időpontot</option>';
 
@@ -78,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (data.times && data.times.length > 0) {
+          console.log(`Found ${data.times.length} available times:`, data.times);
           data.times.forEach(time => {
             const option = document.createElement("option");
             option.value = time;
@@ -86,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
           timeSelect.disabled = false;
         } else {
+          console.log('No available times found');
           timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
           timeSelect.disabled = false;
         }
@@ -269,7 +302,11 @@ document.addEventListener("DOMContentLoaded", function () {
         bookingForm.reset();
         resetTimeSelect();
         hideSummary();
-        datePicker.clear();
+        if (datePicker && datePicker.clear) {
+          datePicker.clear();
+        } else {
+          dateInput.value = '';
+        }
       } else {
         showNotification(response.message || 'Hiba történt a foglalás során. Kérjük próbálja újra!', 'error');
       }
