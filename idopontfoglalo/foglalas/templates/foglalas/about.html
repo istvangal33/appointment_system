@@ -547,6 +547,24 @@
                 height: 200px;
             }
         }
+
+        /* CTA Button Fix */
+        .cta-section {
+            position: relative;
+        }
+        .cta-section .cta-buttons {
+            position: relative;
+            z-index: 10;
+        }
+        .cta-section .cta-buttons .btn {
+            pointer-events: auto !important;
+            position: relative;
+            z-index: 11;
+        }
+        .cta-section::before,
+        .cta-section::after {
+            pointer-events: none;
+        }
     </style>
 </body>
 </html>

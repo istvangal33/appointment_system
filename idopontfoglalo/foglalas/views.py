@@ -72,28 +72,38 @@ def book_appointment(request):
 
     return JsonResponse({'status': 'error', 'message': 'Csak POST kérés engedélyezett'}, status=400)
 
-# ⏰ Elérhető időpontok lekérdezése
 def get_available_times(request):
+    """API endpoint to get available appointment times"""
     slug = request.GET.get('business')
-    date = request.GET.get('date')
+    date_str = request.GET.get('date')
+
+    if not slug or not date_str:
+        return JsonResponse({'times': [], 'error': 'missing-params'}, status=400)
 
     try:
         business = Business.objects.get(slug=slug)
-
-        # 🕙 Munkanap: 10:00–17:00
-        all_times = [time(hour=h) for h in range(10, 18)]
-
-        # 🔒 Lekérjük a már lefoglalt időpontokat
-        booked = Appointment.objects.filter(business=business, date=date).values_list('time', flat=True)
-
-        # 🛠️ Átalakítjuk a foglalt időpontokat time objektummá
-        booked_times = [datetime.strptime(str(t), '%H:%M').time() for t in booked]
-
-        # ✅ Csak a szabad időpontokat küldjük vissza
-        available = [t.strftime('%H:%M') for t in all_times if t not in booked_times]
-        return JsonResponse({'times': available})
-
     except Business.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Nincs ilyen vállalkozás'}, status=400)
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        return JsonResponse({'times': [], 'error': 'unknown-business'}, status=404)
+
+    try:
+        target_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'times': [], 'error': 'bad-date'}, status=400)
+
+    # Generate 30-minute time slots from 10:00 to 17:30
+    all_times = []
+    for h in range(10, 18):  # 10:00 to 17:30
+        for m in (0, 30):
+            all_times.append(time(hour=h, minute=m))
+
+    # Get booked times for this business and date
+    booked_times = set(
+        Appointment.objects
+        .filter(business=business, date=target_date)
+        .values_list('time', flat=True)
+    )
+
+    # Filter out booked times
+    available = [t.strftime('%H:%M') for t in all_times if t not in booked_times]
+    
+    return JsonResponse({'times': available})
