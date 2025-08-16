@@ -49,15 +49,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fetch available times for selected date
   function fetchAvailableTimes(business, date) {
-    // Show loading state
+    // Betöltés állapot
     timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
     timeSelect.disabled = true;
 
-    fetch(`/api/available-times/?business=${business}&date=${date}`)
-      .then(response => response.json())
+    const url = `/api/available-times/?business=${encodeURIComponent(business)}&date=${encodeURIComponent(date)}`;
+
+    fetch(url, { headers: { 'Accept': 'application/json' } })
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
       .then(data => {
         timeSelect.innerHTML = '<option value="">Válasszon időpontot</option>';
-        
+
+        if (data.error) {
+          timeSelect.innerHTML = '<option value="">Hiba történt az időpontok betöltésekor</option>';
+          timeSelect.disabled = false;
+          return;
+        }
+
         if (data.times && data.times.length > 0) {
           data.times.forEach(time => {
             const option = document.createElement("option");
@@ -68,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
         }
-        
+
         timeSelect.disabled = false;
       })
       .catch(error => {

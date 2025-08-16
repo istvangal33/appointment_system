@@ -648,6 +648,12 @@
             margin: 0.5rem 0;
         }
     }
+
+    /* CTA Button fixes */
+    .cta-section { position: relative; }
+    .cta-section .cta-buttons { position: relative; z-index: 2; }
+    .cta-section .cta-buttons .btn { pointer-events: auto; }
+    .cta-section::before, .cta-section::after { pointer-events: none; }
 </style>
 
 </html>

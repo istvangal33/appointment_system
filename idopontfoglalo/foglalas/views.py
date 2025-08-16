@@ -75,25 +75,33 @@ def book_appointment(request):
 # ⏰ Elérhető időpontok lekérdezése
 def get_available_times(request):
     slug = request.GET.get('business')
-    date = request.GET.get('date')
+    date_str = request.GET.get('date')
+
+    if not slug or not date_str:
+        return JsonResponse({'times': [], 'error': 'missing-params'}, status=400)
 
     try:
         business = Business.objects.get(slug=slug)
-
-        # 🕙 Munkanap: 10:00–17:00
-        all_times = [time(hour=h) for h in range(10, 18)]
-
-        # 🔒 Lekérjük a már lefoglalt időpontokat
-        booked = Appointment.objects.filter(business=business, date=date).values_list('time', flat=True)
-
-        # 🛠️ Átalakítjuk a foglalt időpontokat time objektummá
-        booked_times = [datetime.strptime(str(t), '%H:%M').time() for t in booked]
-
-        # ✅ Csak a szabad időpontokat küldjük vissza
-        available = [t.strftime('%H:%M') for t in all_times if t not in booked_times]
-        return JsonResponse({'times': available})
-
     except Business.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Nincs ilyen vállalkozás'}, status=400)
-    except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        return JsonResponse({'times': [], 'error': 'unknown-business'}, status=404)
+
+    try:
+        target_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'times': [], 'error': 'bad-date'}, status=400)
+
+    # 10:00–17:30 félórás idősávok
+    all_times = []
+    for h in range(10, 18):  # 10..17
+        for m in (0, 30):
+            all_times.append(time(hour=h, minute=m))
+
+    # Foglalt idők ezen a napon/üzletnél (TimeField -> time objektumok)
+    booked_times = set(
+        Appointment.objects
+        .filter(business=business, date=target_date)
+        .values_list('time', flat=True)
+    )
+
+    available = [t.strftime('%H:%M') for t in all_times if t not in booked_times]
+    return JsonResponse({'times': available})
