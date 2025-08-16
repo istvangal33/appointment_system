@@ -80,8 +80,12 @@ def get_available_times(request):
     try:
         business = Business.objects.get(slug=slug)
 
-        # 🕙 Munkanap: 10:00–17:00
-        all_times = [time(hour=h) for h in range(10, 18)]
+        # 🕙 Munkanap: 10:00–17:00 (30 perces intervallumok)
+        all_times = []
+        for hour in range(10, 18):  # 10:00-17:30
+            all_times.append(time(hour=hour, minute=0))   # :00
+            if hour < 17:  # Don't add :30 for the last hour (17:30 would be the last slot)
+                all_times.append(time(hour=hour, minute=30))  # :30
 
         # 🔒 Lekérjük a már lefoglalt időpontokat
         booked = Appointment.objects.filter(business=business, date=date).values_list('time', flat=True)

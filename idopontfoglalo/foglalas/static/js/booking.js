@@ -10,28 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const selectedDateTime = document.getElementById("selectedDateTime");
   const dateTimeSummary = document.getElementById("dateTimeSummary");
 
-  // Initialize Flatpickr for date selection
+  // Initialize simple date picker
   const datePicker = flatpickr(dateInput, {
-    dateFormat: "Y-m-d",
-    minDate: "today",
-    maxDate: new Date().fp_incr(90), // Allow booking up to 90 days ahead
-    locale: {
-      firstDayOfWeek: 1, // Monday
-      weekdays: {
-        shorthand: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz'],
-        longhand: ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat']
-      },
-      months: {
-        shorthand: ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'],
-        longhand: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December']
-      }
-    },
-    disable: [
-      // Disable Sundays (day 0)
-      function(date) {
-        return (date.getDay() === 0);
-      }
-    ],
     onChange: function (selectedDates, dateStr) {
       if (dateStr) {
         fetchAvailableTimes(business, dateStr);
@@ -42,8 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
     onReady: function(selectedDates, dateStr, instance) {
-      // Add some styling to the calendar
-      instance.calendarContainer.classList.add('flatpickr-custom');
+      // Add some styling to the date input
+      if (instance.element) {
+        instance.element.classList.add('date-picker-custom');
+      }
     }
   });
 
@@ -227,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show loading state
     const submitBtn = bookingForm.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Foglalás küldése...';
+    submitBtn.innerHTML = '⏳ Foglalás küldése...';
     submitBtn.disabled = true;
 
     // Submit booking
@@ -303,8 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const notification = document.createElement('div');
     notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} notification-toast`;
     notification.innerHTML = `
-      <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'} me-2"></i>
-      ${message}
+      ${type === 'error' ? '⚠️' : '✅'} ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
     
@@ -349,18 +330,9 @@ document.addEventListener("DOMContentLoaded", function () {
       to { transform: translateX(0); opacity: 1; }
     }
     
-    .flatpickr-custom {
+    .date-picker-custom {
       border-radius: 10px;
       box-shadow: 0 4px 20px rgba(139, 115, 85, 0.1);
-    }
-    
-    .flatpickr-custom .flatpickr-day.selected {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-    
-    .flatpickr-custom .flatpickr-day:hover {
-      background: var(--beige);
     }
     
     .is-invalid {
