@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Appointment, Business, Service
+from foglalas.models import Appointment, Business, Service
 from datetime import time
 import json
 from datetime import time, datetime
@@ -11,7 +11,7 @@ def index(request):
     """Homepage - Hero section with service overview"""
     business = Business.objects.filter(slug='harmonia-masszazs').first()
     services = Service.objects.filter(business=business)[:4] if business else []
-    return render(request, 'foglalas/index.html', {
+    return render(request, 'massage/index.html', {
         'business': business,
         'services': services
     })
@@ -21,7 +21,7 @@ def about(request):
     """About page - Salon details, philosophy, services with prices"""
     business = Business.objects.filter(slug='harmonia-masszazs').first()
     services = Service.objects.filter(business=business) if business else []
-    return render(request, 'foglalas/about.html', {
+    return render(request, 'massage/about.html', {
         'business': business,
         'services': services
     })
@@ -30,36 +30,33 @@ def about(request):
 def contact(request):
     """Contact page - Contact info, hours, map, contact form"""
     business = Business.objects.filter(slug='harmonia-masszazs').first()
-    return render(request, 'foglalas/contact.html', {
+    return render(request, 'massage/contact.html', {
         'business': business
     })
 
 # Updated booking form view
-def foglalas_form(request):
+def book(request):
     """Booking form for massage salon"""
     business = Business.objects.filter(slug='harmonia-masszazs').first()
-    return render(request, 'foglalas/book.html', {
+    return render(request, 'massage/book.html', {
         'business': business
     })
 
-
-
-# 📅 Időpont foglalása
+# 📅 Időpont foglalása - Massage specific
 @csrf_exempt
 def book_appointment(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             slug = data.get('business')
-            service_type = data.get('service_type', 'massage')  # Default to massage for backward compatibility
 
             # 🔍 Lekérjük a Business példányt slug alapján
             business = Business.objects.get(slug=slug)
 
-            # 📝 Létrehozzuk a foglalást
+            # 📝 Létrehozzuk a foglalást massage service típussal
             Appointment.objects.create(
                 business=business,
-                service_type=service_type,
+                service_type='massage',  # Force massage type
                 name=data['name'],
                 phone=data['phone'],
                 email=data['email'],
@@ -80,24 +77,20 @@ def get_available_times(request):
     date_str = request.GET.get('date')
 
     if not slug or not date_str:
-        return JsonResponse({'times': [], 'error': 'missing-params'}, status=400)
+        return JsonResponse({'error': 'Missing parameters'}, status=400)
 
     try:
         business = Business.objects.get(slug=slug)
-    except Business.DoesNotExist:
-        return JsonResponse({'times': [], 'error': 'unknown-business'}, status=404)
-
-    try:
         target_date = datetime.strptime(date_str, '%Y-%m-%d').date()
-    except ValueError:
-        return JsonResponse({'times': [], 'error': 'bad-date'}, status=400)
+    except (Business.DoesNotExist, ValueError):
+        return JsonResponse({'error': 'Invalid parameters'}, status=400)
 
-    # Generate time slots based on business time_interval setting
-    all_times = []
-    interval_minutes = business.time_interval  # 30 or 60 minutes
-    start_hour = 8  # 8:00 AM
-    end_hour = 17   # 5:00 PM (17:00)
+    # Generate hourly time slots from 8-17 (8:00 to 17:00)
+    start_hour = 8
+    end_hour = 17
+    interval_minutes = business.time_interval
     
+    all_times = []
     current_hour = start_hour
     current_minute = 0
     
@@ -110,10 +103,10 @@ def get_available_times(request):
             current_hour += 1
             current_minute = 0
 
-    # Get booked times for this business and date
+    # Get booked times for this business and date - only massage appointments
     booked_times = set(
         Appointment.objects
-        .filter(business=business, date=target_date)
+        .filter(business=business, date=target_date, service_type='massage')
         .values_list('time', flat=True)
     )
 

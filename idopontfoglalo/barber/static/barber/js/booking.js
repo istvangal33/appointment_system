@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
     timeSelect.disabled = true;
 
-    const url = `/api/available-times/?business=${encodeURIComponent(business)}&date=${encodeURIComponent(date)}`;
+    const url = `/barber/api/available-times/?business=${encodeURIComponent(business)}&date=${encodeURIComponent(date)}`;
     console.log('API URL:', url);
 
     fetch(url, { 
@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
     submitBtn.disabled = true;
 
     // Submit booking
-    fetch('/api/book-appointment/', {
+    fetch('/barber/api/book-appointment/', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',

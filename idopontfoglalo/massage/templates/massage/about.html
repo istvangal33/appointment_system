@@ -1,0 +1,570 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bemutatkozás - {{ business.name }}</title>
+    <meta name="description" content="Ismerd meg a Harmónia Masszázs Szalont! Tapasztalt masszőrök, különleges kezelések, személyre szabott szolgáltatások Budapest belvárosában.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'massage/css/style.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'massage:index' %}">
+                <span class="brand-name">Harmónia</span>
+                <span class="brand-subtitle">Masszázs Szalon</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'massage:index' %}">Főoldal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'massage:about' %}">Bemutatkozás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'massage:contact' %}">Kapcsolat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2 px-3" href="{% url 'massage:book' %}">Időpont foglalás</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero py-5 mt-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Ismerd meg a Harmónia Masszázs Szalont</h1>
+                    <p class="hero-subtitle">Több mint 10 éve szolgáljuk ki vendégeinket professzionális masszázs szolgáltatásokkal Budapest szívében.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-image-container">
+                        <div class="about-image-placeholder">
+                            <i class="fas fa-spa spa-icon"></i>
+                            <p class="text-muted mt-3">Nyugodt, professzionális környezet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="our-story py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="story-content">
+                        <h2 class="section-title text-center">Történetünk</h2>
+                        <p class="section-subtitle text-center">Hogyan kezdődött minden</p>
+                        
+                        <div class="story-text">
+                            <p>A Harmónia Masszázs Szalon 2014-ben nyitotta meg kapuit Budapest belvárosában, azzal a küldetéssel, hogy egy olyan helyet teremtsen, ahol a városi rohanásból kikapcsolódva megtalálhatja belső harmóniáját.</p>
+                            
+                            <p>Alapítónk, <strong>Kovács Mária</strong>, több mint 15 éves tapasztalattal rendelkezik a masszázs és wellness területén. Szakmai pályafutása során számos nemzetközi technikát sajátított el, és rendszeresen vesz részt továbbképzéseken, hogy vendégeinek mindig a legkorszerűbb kezeléseket kínálhassa.</p>
+                            
+                            <p>Szalonunkban a hagyományos masszázs technikákat ötvözzük a modern wellness trendekkel, hogy minden vendégünk számára személyre szabott élményt nyújtsunk. Hiszünk abban, hogy a jó masszázs nemcsak a testi, hanem a lelki egészségre is pozitív hatással van.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h2 class="section-title text-center">Filozófiánk</h2>
+                    <p class="section-subtitle text-center">Miben hiszünk</p>
+                    
+                    <div class="row g-4 mt-4">
+                        <div class="col-lg-4">
+                            <div class="philosophy-card">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h4>Személyre szabott ellátás</h4>
+                                <p>Minden vendégünk egyedi, ezért a kezeléseket mindig az egyéni igényekhez és problémákhoz igazítjuk.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="philosophy-card">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h4>Természetes módszerek</h4>
+                                <p>Csak a legminőségibb természetes olajokat és anyagokat használjuk kezeléseink során.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="philosophy-card">
+                                <div class="philosophy-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <h4>Holisztikus megközelítés</h4>
+                                <p>A test és a lélek harmóniájára összpontosítunk, teljes körű jóllétet biztosítva.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Services -->
+    <section class="detailed-services py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h2 class="section-title text-center">Szolgáltatásaink részletesen</h2>
+                    <p class="section-subtitle text-center">Minden kezelés szakértő kezekkel, személyre szabottan</p>
+                    
+                    <div class="services-grid mt-5">
+                        <!-- Swedish Massage -->
+                        <div class="detailed-service-card">
+                            <div class="service-header">
+                                <div class="service-icon-large">
+                                    <i class="fas fa-hands-healing"></i>
+                                </div>
+                                <div class="service-info">
+                                    <h3>Svéd masszázs</h3>
+                                    <div class="service-meta">
+                                        <span class="duration"><i class="fas fa-clock"></i> 60 perc</span>
+                                        <span class="price"><i class="fas fa-tag"></i> 8,000 Ft</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-description">
+                                <p>A klasszikus svéd masszázs a legismertebb és legkedveltebb masszázs típus. Long és rövid stroke-okkal, gyúrással és simítással dolgozunk. Tökéletes választás izmok ellazítására, feszültség oldására és a vérkeringés javítására.</p>
+                                <ul class="service-benefits">
+                                    <li>Izomfeszültség oldása</li>
+                                    <li>Vérkeringés javítása</li>
+                                    <li>Stressz csökkentés</li>
+                                    <li>Általános jólét növelése</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Relaxation Massage -->
+                        <div class="detailed-service-card">
+                            <div class="service-header">
+                                <div class="service-icon-large">
+                                    <i class="fas fa-spa"></i>
+                                </div>
+                                <div class="service-info">
+                                    <h3>Relaxációs masszázs</h3>
+                                    <div class="service-meta">
+                                        <span class="duration"><i class="fas fa-clock"></i> 90 perc</span>
+                                        <span class="price"><i class="fas fa-tag"></i> 12,000 Ft</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-description">
+                                <p>Hosszabb időtartamú, lágy mozdulatokkal végzett masszázs, amely a teljes testi-lelki ellazulást szolgálja. Tökéletes választás az everyday stress oldására és a belső egyensúly helyreállítására.</p>
+                                <ul class="service-benefits">
+                                    <li>Mély relaxáció</li>
+                                    <li>Alvásminőség javítása</li>
+                                    <li>Mentális feszültség oldása</li>
+                                    <li>Energiaszint kiegyensúlyozása</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Thai Massage -->
+                        <div class="detailed-service-card">
+                            <div class="service-header">
+                                <div class="service-icon-large">
+                                    <i class="fas fa-yin-yang"></i>
+                                </div>
+                                <div class="service-info">
+                                    <h3>Thai masszázs</h3>
+                                    <div class="service-meta">
+                                        <span class="duration"><i class="fas fa-clock"></i> 75 perc</span>
+                                        <span class="price"><i class="fas fa-tag"></i> 10,000 Ft</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-description">
+                                <p>Az ősi thai hagyományok szerint végzett masszázs, amely passzív nyújtásokat, akupresszúrát és energia munkapont aktiválást ötvöz. Rugalmas és kényelmes ruházatban végezhető.</p>
+                                <ul class="service-benefits">
+                                    <li>Rugalmasság növelése</li>
+                                    <li>Energia flow harmonizálása</li>
+                                    <li>Ízületi mobilitás javítása</li>
+                                    <li>Holisztikus gyógyulás</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Aromatherapy Massage -->
+                        <div class="detailed-service-card">
+                            <div class="service-header">
+                                <div class="service-icon-large">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="service-info">
+                                    <h3>Aromaterápiás masszázs</h3>
+                                    <div class="service-meta">
+                                        <span class="duration"><i class="fas fa-clock"></i> 60 perc</span>
+                                        <span class="price"><i class="fas fa-tag"></i> 9,000 Ft</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="service-description">
+                                <p>Különleges esszenciális olajokkal végzett masszázs, amely a testi jótékony hatást a természetes aromák gyógyító erejével ötvözi. Az olajakat egyéni igények szerint választjuk ki.</p>
+                                <ul class="service-benefits">
+                                    <li>Aromaterápiás gyógyhatás</li>
+                                    <li>Hangulat javítása</li>
+                                    <li>Immunrendszer erősítése</li>
+                                    <li>Hormonális egyensúly</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Masseur Introduction -->
+    <section class="masseur-intro py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4">
+                    <div class="masseur-image">
+                        <div class="masseur-placeholder">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="masseur-content">
+                        <h2 class="section-title">Kovács Mária</h2>
+                        <p class="masseur-title">Alapító masszőr és wellness szakértő</p>
+                        
+                        <div class="masseur-description">
+                            <p>Több mint 15 éves tapasztalattal rendelkezem a masszázs és wellness területén. Szakmai pályafutásom során folyamatosan képzem magam, hogy vendégeimnek mindig a legkorszerűbb és leghatékonyabb kezeléseket kínálhassam.</p>
+                            
+                            <div class="qualifications">
+                                <h5>Képzettségeim:</h5>
+                                <ul>
+                                    <li>Svéd masszázs szakképzés</li>
+                                    <li>Thai masszázs nemzetközi tanúsítvány</li>
+                                    <li>Aromaterápia specialist</li>
+                                    <li>Reflexológia képzés</li>
+                                    <li>Wellness tanácsadó</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="philosophy-quote">„Hiszem, hogy minden embernek joga van az egészséghez és a jólléthez. Munkám során ezt az elvet követve igyekszem minden vendégem számára személyre szabott kezelést nyújtani."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="cta-title text-white">Tapasztalja meg a különbséget!</h2>
+                    <p class="cta-subtitle text-white">Foglaljon időpontot még ma és engedje, hogy szakértő kezeink visszaadják Önnek a harmóniát</p>
+                    <div class="cta-buttons">
+                        <a href="{% url 'massage:book' %}" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-calendar-check me-2"></i>Online foglalás
+                        </a>
+                        <a href="{% url 'massage:contact' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-info-circle me-2"></i>További információ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>{{ business.name }}</h5>
+                    <p class="text-muted">{{ business.description }}</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Elérhetőségek</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>{{ business.address }}</p>
+                        <p><i class="fas fa-phone me-2"></i>{{ business.phone }}</p>
+                        <p><i class="fas fa-envelope me-2"></i>{{ business.email }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Nyitvatartás</h5>
+                    <div class="opening-hours">
+                        <p>Hétfő - Péntek: 10:00 - 19:00</p>
+                        <p>Szombat: 10:00 - 17:00</p>
+                        <p>Vasárnap: Zárva</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">&copy; 2024 {{ business.name }}. Minden jog fenntartva.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="{% url 'massage:book' %}" class="btn btn-primary">Időpont foglalás</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'massage/js/main.js' %}"></script>
+
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+            padding: 4rem 0;
+        }
+
+        .about-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-image-placeholder {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, var(--secondary-light), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .spa-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .philosophy-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            height: 100%;
+        }
+
+        .philosophy-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .philosophy-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .detailed-service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .detailed-service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--secondary-light), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+        }
+
+        .service-icon-large i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-meta span {
+            background: var(--beige);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-right: 1rem;
+            color: var(--text-dark);
+        }
+
+        .service-meta i {
+            color: var(--primary-color);
+            margin-right: 0.3rem;
+        }
+
+        .service-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .service-benefits li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .masseur-image {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .masseur-placeholder {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        .masseur-placeholder i {
+            font-size: 4rem;
+        }
+
+        .masseur-title {
+            color: var(--accent-gold);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .qualifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .qualifications li {
+            padding: 0.3rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .qualifications li::before {
+            content: '🏆';
+            position: absolute;
+            left: 0;
+        }
+
+        .philosophy-quote {
+            font-style: italic;
+            color: var(--primary-color);
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .service-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .service-icon-large {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .about-image-placeholder,
+            .masseur-placeholder {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* CTA Button Fix */
+        .cta-section {
+            position: relative;
+        }
+        .cta-section .cta-buttons {
+            position: relative;
+            z-index: 10;
+        }
+        .cta-section .cta-buttons .btn {
+            pointer-events: auto !important;
+            position: relative;
+            z-index: 11;
+        }
+        .cta-section::before,
+        .cta-section::after {
+            pointer-events: none;
+        }
+    </style>
+</body>
+</html>

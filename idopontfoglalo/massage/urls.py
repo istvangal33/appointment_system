@@ -1,14 +1,13 @@
 from django.urls import path
 from . import views
 
-app_name = 'barber'
+app_name = 'massage'
 
 urlpatterns = [
+    # Main website pages
     path('', views.index, name='index'),
-    path('services/', views.services, name='services'),
-    path('gallery/', views.gallery, name='gallery'),
-    path('contact/', views.contact, name='contact'),
-    path('about/', views.about, name='about'),
+    path('bemutatkozas/', views.about, name='about'),
+    path('kapcsolat/', views.contact, name='contact'),
     path('idopont-foglalas/', views.book, name='book'),
     
     # API endpoints  
