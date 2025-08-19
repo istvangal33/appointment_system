@@ -324,9 +324,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Show success modal
   function showSuccessModal(bookingData) {
-    const modal = new bootstrap.Modal(document.getElementById('successModal'));
+    const successModalElement = document.getElementById('successModal');
     const bookingDetails = document.getElementById('bookingDetails');
     
+    // Update booking details
     bookingDetails.innerHTML = `
       <div class="detail-item">
         <span class="detail-label">Név:</span>
@@ -350,7 +351,24 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
     
-    modal.show();
+    // Show modal using fallback method for better compatibility
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+      // Use Bootstrap modal if available
+      const modal = new bootstrap.Modal(successModalElement);
+      modal.show();
+    } else {
+      // Fallback: show modal manually
+      successModalElement.style.display = 'block';
+      successModalElement.classList.add('show');
+      successModalElement.style.paddingRight = '17px';
+      document.body.classList.add('modal-open');
+      
+      // Add backdrop
+      const backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop fade show';
+      backdrop.id = 'modal-backdrop-manual';
+      document.body.appendChild(backdrop);
+    }
   }
 
   // Show notification
@@ -456,6 +474,30 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  // Handle modal close buttons when Bootstrap is not available
+  document.addEventListener('click', function(e) {
+    if (e.target.matches('[data-bs-dismiss="modal"]')) {
+      const modalElement = e.target.closest('.modal');
+      if (modalElement) {
+        closeModal(modalElement);
+      }
+    }
+  });
+
+  // Function to close modal manually
+  function closeModal(modalElement) {
+    modalElement.style.display = 'none';
+    modalElement.classList.remove('show');
+    modalElement.style.paddingRight = '';
+    document.body.classList.remove('modal-open');
+    
+    // Remove manual backdrop
+    const backdrop = document.getElementById('modal-backdrop-manual');
+    if (backdrop) {
+      backdrop.remove();
+    }
+  }
 
   console.log('Enhanced booking system initialized for Harmónia Masszázs Szalon');
 });
