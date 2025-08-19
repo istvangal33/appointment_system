@@ -1,0 +1,323 @@
+{% extends 'personal/base.html' %}
+
+{% block title %}Portfólió - John Doe{% endblock %}
+{% block description %}John Doe portfóliója - munkák, projektek és referenciák.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-5 fw-bold">Portfólió</h1>
+                <p class="lead text-muted">Válogatás a munkáimból és projektjeimből</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Filter -->
+<section class="py-3 bg-white sticky-top shadow-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="portfolioFilter" id="all" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="all">Összes</label>
+
+                    <input type="radio" class="btn-check" name="portfolioFilter" id="web" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="web">Webfejlesztés</label>
+
+                    <input type="radio" class="btn-check" name="portfolioFilter" id="design" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="design">Design</label>
+
+                    <input type="radio" class="btn-check" name="portfolioFilter" id="mobile" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="mobile">Mobilalkalmazás</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Grid -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4" id="portfolioGrid">
+            <!-- Project 1 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="web">
+                <div class="card h-100">
+                    <!-- Project Image Placeholder -->
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-laptop-code fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">Projekt kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">E-commerce weboldal</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Django</span>
+                            <span class="badge bg-secondary">Bootstrap</span>
+                            <span class="badge bg-success">PostgreSQL</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fab fa-github me-1"></i> Kód
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="design">
+                <div class="card h-100">
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-palette fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">Design kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Márka identitás tervezés</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-warning">Photoshop</span>
+                            <span class="badge bg-info">Illustrator</span>
+                            <span class="badge bg-dark">Figma</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fas fa-download me-1"></i> Letöltés
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="mobile">
+                <div class="card h-100">
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-mobile-alt fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">Mobil app kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fitness tracker alkalmazás</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-success">React Native</span>
+                            <span class="badge bg-primary">Redux</span>
+                            <span class="badge bg-warning">Firebase</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fab fa-github me-1"></i> Kód
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="web">
+                <div class="card h-100">
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-chart-bar fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">Dashboard kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Analytics Dashboard</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">React</span>
+                            <span class="badge bg-secondary">Chart.js</span>
+                            <span class="badge bg-success">Node.js</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fab fa-github me-1"></i> Kód
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="design">
+                <div class="card h-100">
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-paint-brush fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">UI Design kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">UI/UX Design System</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-dark">Figma</span>
+                            <span class="badge bg-warning">Sketch</span>
+                            <span class="badge bg-info">Adobe XD</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fas fa-download me-1"></i> Letöltés
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="col-lg-4 col-md-6 portfolio-item" data-category="web">
+                <div class="card h-100">
+                    <div class="bg-light" style="height: 250px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center">
+                            <i class="fas fa-blog fa-3x text-secondary mb-2"></i>
+                            <p class="text-secondary">Blog platform kép</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Blog platform</h5>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-success">Vue.js</span>
+                            <span class="badge bg-primary">Express</span>
+                            <span class="badge bg-secondary">MongoDB</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-outline-primary btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i> Megtekintés
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm flex-fill">
+                                <i class="fab fa-github me-1"></i> Kód
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2>Mit mondanak az ügyfelek</h2>
+                <p class="text-muted">Visszajelzések a korábbi projektekről</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p class="mb-4">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident."</p>
+                        <h6>Kiss János</h6>
+                        <small class="text-muted">Cégvezető, Példa Kft.</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p class="mb-4">"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."</p>
+                        <h6>Nagy Petra</h6>
+                        <small class="text-muted">Marketing vezető, Másik Cég Zrt.</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-quote-left fa-2x text-primary mb-3"></i>
+                        <p class="mb-4">"Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+                        <h6>Tóth Gábor</h6>
+                        <small class="text-muted">IT vezető, Start-up Kft.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Portfolio filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('input[name="portfolioFilter"]');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('change', function() {
+            const filterValue = this.id;
+            
+            portfolioItems.forEach(item => {
+                if (filterValue === 'all' || item.dataset.category === filterValue) {
+                    item.style.display = 'block';
+                    item.classList.add('fade-in');
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('fade-in');
+                }
+            });
+        });
+    });
+});
+</script>
+
+<style>
+.portfolio-item {
+    transition: all 0.3s ease;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}

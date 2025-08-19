@@ -1,0 +1,211 @@
+{% extends 'personal/base.html' %}
+
+{% block title %}Kapcsolat - John Doe{% endblock %}
+{% block description %}Vegye fel John Doe-val a kapcsolatot. Elérhetőségek és kapcsolatfelvételi űrlap.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-5 fw-bold">Kapcsolat</h1>
+                <p class="lead text-muted">Vegye fel velem a kapcsolatot bármilyen kérdéssel</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                        <h5>Email</h5>
+                        <p class="text-muted">john.doe@example.com</p>
+                        <a href="mailto:john.doe@example.com" class="btn btn-outline-primary">Email küldése</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-phone fa-3x text-primary mb-3"></i>
+                        <h5>Telefon</h5>
+                        <p class="text-muted">+36 30 123 4567</p>
+                        <a href="tel:+36301234567" class="btn btn-outline-primary">Hívás</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-map-marker-alt fa-3x text-primary mb-3"></i>
+                        <h5>Helyszín</h5>
+                        <p class="text-muted">Budapest, Magyarország</p>
+                        <a href="#map" class="btn btn-outline-primary">Térkép</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-5">Üzenet küldése</h2>
+                
+                <form id="contactForm" class="needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="firstName" class="form-label">Keresztnév *</label>
+                            <input type="text" class="form-control" id="firstName" required>
+                            <div class="invalid-feedback">
+                                Kérjük adja meg a keresztnevét.
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="lastName" class="form-label">Vezetéknév *</label>
+                            <input type="text" class="form-control" id="lastName" required>
+                            <div class="invalid-feedback">
+                                Kérjük adja meg a vezetéknevét.
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email cím *</label>
+                            <input type="email" class="form-control" id="email" required>
+                            <div class="invalid-feedback">
+                                Kérjük adjon meg egy érvényes email címet.
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="phone" class="form-label">Telefonszám</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="subject" class="form-label">Tárgy *</label>
+                            <select class="form-select" id="subject" required>
+                                <option value="">Válasszon tárgyat...</option>
+                                <option value="general">Általános kérdés</option>
+                                <option value="project">Projekt megbeszélés</option>
+                                <option value="collaboration">Együttműködés</option>
+                                <option value="other">Egyéb</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Kérjük válasszon egy tárgyat.
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <label for="message" class="form-label">Üzenet *</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                            <div class="invalid-feedback">
+                                Kérjük írja meg az üzenetét.
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="privacy" required>
+                                <label class="form-check-label" for="privacy">
+                                    Elfogadom az <a href="#">adatvédelmi szabályzatot</a> *
+                                </label>
+                                <div class="invalid-feedback">
+                                    Kérjük fogadja el az adatvédelmi szabályzatot.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                Üzenet küldése
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Media -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto text-center">
+                <h2 class="mb-4">Kövessen a közösségi médiában</h2>
+                <p class="text-muted mb-4">
+                    Kövesse nyomon a legfrissebb projektjeimet és gondolataimat.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="btn btn-outline-primary btn-lg me-3">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="#" class="btn btn-outline-info btn-lg me-3">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="btn btn-outline-dark btn-lg">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-5">
+                <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                <h4>Üzenet elküldve!</h4>
+                <p>Köszönöm az üzenetét! Hamarosan válaszolok.</p>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Rendben</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var form = document.getElementById('contactForm');
+        
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                event.preventDefault();
+                // Show success modal instead of actually sending
+                var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Reset form
+                form.reset();
+                form.classList.remove('was-validated');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
+</script>
+{% endblock %}

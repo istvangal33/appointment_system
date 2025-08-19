@@ -19,7 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('foglalas.urls')),  # ← ez betölti az app URL-jeit
+    path('', include('foglalas.urls')),  # Main appointment system (massage salon)
+    path('personal/', include('personal.urls')),  # Personal introduction website
+    path('barber/', include('barber.urls')),  # Barber residence website
 ]
 
 
