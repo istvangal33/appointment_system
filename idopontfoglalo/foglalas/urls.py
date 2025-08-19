@@ -11,4 +11,5 @@ urlpatterns = [
     # API endpoints  
     path('api/book-appointment/', views.book_appointment, name='book_appointment'),
     path('api/available-times/', views.get_available_times, name='available_times'),
+    path('api/slots/', views.get_slots, name='get_slots'),
 ]
