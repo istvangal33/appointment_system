@@ -16,7 +16,7 @@
                         Fedezze fel Budapest legjobb borbély élményét.
                     </p>
                     <div class="d-flex gap-3">
-                        <a href="/" class="btn btn-primary btn-lg px-4">Időpont foglalás</a>
+                        <a href="{% url 'barber:book' %}" class="btn btn-primary btn-lg px-4">Időpont foglalás</a>
                         <a href="{% url 'barber:services' %}" class="btn btn-outline-light btn-lg px-4">Szolgáltatások</a>
                     </div>
                 </div>
@@ -219,7 +219,7 @@
                     Ne várjon tovább! Tapasztalja meg Budapest legjobb borbély szolgáltatásait.
                 </p>
                 <div class="d-flex gap-3 justify-content-center">
-                    <a href="/" class="btn btn-dark btn-lg px-4">Online foglalás</a>
+                    <a href="{% url 'barber:book' %}" class="btn btn-dark btn-lg px-4">Online foglalás</a>
                     <a href="tel:+36123456789" class="btn btn-outline-dark btn-lg px-4">
                         <i class="fas fa-phone me-2"></i>Telefonos foglalás
                     </a>

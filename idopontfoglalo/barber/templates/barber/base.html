@@ -154,7 +154,7 @@
                         <a class="nav-link" href="{% url 'barber:contact' %}">Kapcsolat</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary px-3 ms-2" href="/">Időpont foglalás</a>
+                        <a class="nav-link btn btn-primary px-3 ms-2" href="{% url 'barber:book' %}">Időpont foglalás</a>
                     </li>
                 </ul>
             </div>
@@ -209,7 +209,7 @@
                     <p class="mb-0">&copy; 2024 Elite Barber Shop. Minden jog fenntartva.</p>
                 </div>
                 <div class="col-md-6 text-end">
-                    <a href="/" class="btn btn-primary">Időpont foglalás</a>
+                    <a href="{% url 'barber:book' %}" class="btn btn-primary">Időpont foglalás</a>
                 </div>
             </div>
         </div>

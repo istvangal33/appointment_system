@@ -1,0 +1,580 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Időpont foglalás - {{ business.name }}</title>
+    <meta name="description" content="Foglaljon időpontot online a {{ business.name }}ba. Egyszerű, gyors foglalás néhány kattintással.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'barber/css/style.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'barber:index' %}">
+                <span class="brand-name">Elite</span>
+                <span class="brand-subtitle">Barber</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'barber:index' %}">Kezdőlap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'barber:about' %}">Rólunk</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'barber:services' %}">Szolgáltatások</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'barber:contact' %}">Kapcsolat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white ms-2 px-3 active" href="{% url 'barber:book' %}">Időpont foglalás</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="booking-hero py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="hero-title">Borbély Időpont foglalás</h1>
+                    <p class="hero-subtitle">Foglaljon időpontot professzionális borbély szolgáltatásainkra. Hajvágás, szakállformázás és arcápolás.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Process -->
+    <section class="booking-process py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <!-- Process Steps -->
+                    <div class="process-steps mb-5">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <h5>1. Dátum választás</h5>
+                                    <p>Válassza ki a kívánt dátumot</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <h5>2. Időpont választás</h5>
+                                    <p>Válasszon a szabad időpontok közül</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="step-icon">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <h5>3. Adatok megadása</h5>
+                                    <p>Adja meg elérhetőségeit</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="booking-form-container">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="booking-form">
+                                    <form id="bookingForm">
+                                        <input type="hidden" id="business" value="{{ business.slug }}">
+                                        <input type="hidden" id="service_type" value="barber">
+                                        
+                                        <div class="form-section">
+                                            <div class="form-section-header">
+                                                <i class="fas fa-calendar-alt"></i>
+                                                <h4>Válassza ki a dátumot és időpontot</h4>
+                                            </div>
+                                            
+                                            <div class="row g-4">
+                                                <div class="col-md-6">
+                                                    <label for="date" class="form-label">
+                                                        <i class="fas fa-calendar me-2"></i>Dátum *
+                                                    </label>
+                                                    <input type="text" class="form-control" id="date" name="date" placeholder="Válasszon dátumot" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="time" class="form-label">
+                                                        <i class="fas fa-clock me-2"></i>Időpont *
+                                                    </label>
+                                                    <select class="form-select" id="time" name="time" required>
+                                                        <option value="">Először válassza ki a dátumot</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-section">
+                                            <div class="form-section-header">
+                                                <i class="fas fa-user"></i>
+                                                <h4>Személyes adatok</h4>
+                                            </div>
+                                            
+                                            <div class="row g-4">
+                                                <div class="col-md-6">
+                                                    <label for="name" class="form-label">
+                                                        <i class="fas fa-user me-2"></i>Teljes név *
+                                                    </label>
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Kovács János" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phone" class="form-label">
+                                                        <i class="fas fa-phone me-2"></i>Telefonszám *
+                                                    </label>
+                                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+36 20 123 4567" required>
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="email" class="form-label">
+                                                        <i class="fas fa-envelope me-2"></i>Email cím *
+                                                    </label>
+                                                    <input type="email" class="form-control" id="email" name="email" placeholder="pelda@email.com" required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-section">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                                <label class="form-check-label" for="terms">
+                                                    Elfogadom az <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Általános Szerződési Feltételeket</a> és az adatkezelési tájékoztatót *
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="newsletter">
+                                                <label class="form-check-label" for="newsletter">
+                                                    Szeretnék hírlevelet kapni az akciókról és újdonságokról
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                                <i class="fas fa-calendar-check me-2"></i>Foglalás megerősítése
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Booking Summary -->
+                            <div class="col-lg-4">
+                                <div class="booking-summary">
+                                    <h4><i class="fas fa-clipboard-list me-2"></i>Foglalás összesítő</h4>
+                                    
+                                    <div class="summary-item">
+                                        <div class="summary-icon">
+                                            <i class="fas fa-spa"></i>
+                                        </div>
+                                        <div class="summary-content">
+                                            <h6>Szalon</h6>
+                                            <p>{{ business.name }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-item">
+                                        <div class="summary-icon">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                        <div class="summary-content">
+                                            <h6>Helyszín</h6>
+                                            <p>{{ business.address }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-item" id="dateTimeSummary" style="display: none;">
+                                        <div class="summary-icon">
+                                            <i class="fas fa-calendar-check"></i>
+                                        </div>
+                                        <div class="summary-content">
+                                            <h6>Időpont</h6>
+                                            <p id="selectedDateTime">Válassza ki a dátumot és időt</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="summary-notes">
+                                        <h6><i class="fas fa-info-circle me-2"></i>Fontos információk</h6>
+                                        <ul>
+                                            <li>A foglalást 24 órával előre kérjük lemondani</li>
+                                            <li>Kérjük érkezzen 5 perccel korábban</li>
+                                            <li>Fizetés készpénzzel vagy kártyával</li>
+                                            <li>Megerősítő emailt fog kapni</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="contact-info">
+                                        <h6><i class="fas fa-phone me-2"></i>Kérdése van?</h6>
+                                        <p>Hívja kollégánkat:</p>
+                                        <a href="tel:{{ business.phone }}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-phone me-2"></i>{{ business.phone }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Message -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="modal-title mb-3">Foglalás sikeres!</h3>
+                    <p class="mb-4">Köszönjük foglalását! Rövid időn belül megerősítő emailt fog kapni a megadott címre.</p>
+                    <div class="booking-details" id="bookingDetails">
+                        <!-- Details will be populated by JavaScript -->
+                    </div>
+                    <div class="modal-actions mt-4">
+                        <a href="{% url 'massage:index' %}" class="btn btn-primary me-2">Vissza a főoldalra</a>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Bezárás</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Általános Szerződési Feltételek</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>1. Időpontfoglalás</h6>
+                    <p>Az időpontfoglalás online rendszerünkön keresztül vagy telefonon történik. A foglalás csak előzetes időpont-egyeztetéssel lehetséges.</p>
+                    
+                    <h6>2. Lemondás</h6>
+                    <p>A foglalt időpont lemondása legalább 24 órával előre telefonon vagy emailben lehetséges. Ezen határidő elmulasztása esetén a kezelés teljes díját felszámítjuk.</p>
+                    
+                    <h6>3. Fizetési feltételek</h6>
+                    <p>A kezelés díját a helyszínen, készpénzben vagy bankkártyával lehet kiegyenlíteni. Minden kezelésről számlát állítunk ki.</p>
+                    
+                    <h6>4. Adatkezelés</h6>
+                    <p>Az Ön által megadott személyes adatokat kizárólag a foglalás lebonyolítása és kapcsolattartás céljából használjuk fel, összhangban a GDPR előírásaival.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5 bg-dark text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>{{ business.name }}</h5>
+                    <p class="text-muted">{{ business.description }}</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Elérhetőségek</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt me-2"></i>{{ business.address }}</p>
+                        <p><i class="fas fa-phone me-2"></i>{{ business.phone }}</p>
+                        <p><i class="fas fa-envelope me-2"></i>{{ business.email }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Nyitvatartás</h5>
+                    <div class="opening-hours">
+                        <p>Hétfő - Péntek: 10:00 - 19:00</p>
+                        <p>Szombat: 10:00 - 17:00</p>
+                        <p>Vasárnap: Zárva</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">&copy; 2024 {{ business.name }}. Minden jog fenntartva.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="{% url 'massage:contact' %}" class="btn btn-outline-light">Kapcsolat</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{% static 'barber/js/main.js' %}"></script>
+    <script src="{% static 'barber/js/booking.js' %}"></script>
+</body>
+
+<style>
+    .booking-hero {
+        background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 100%);
+        padding: 4rem 0 2rem;
+    }
+
+    .process-steps {
+        margin-bottom: 3rem;
+    }
+
+    .process-step {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .step-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .booking-form {
+        background: white;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: var(--box-shadow);
+    }
+
+    .form-section {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .form-section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-section-header i {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+    }
+
+    .form-section-header h4 {
+        color: var(--primary-color);
+        margin: 0;
+        font-size: 1.3rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-label i {
+        color: var(--primary-color);
+    }
+
+    .form-control,
+    .form-select {
+        border: 2px solid var(--border-light);
+        border-radius: 10px;
+        padding: 0.8rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(139, 115, 85, 0.25);
+    }
+
+    .form-check-input {
+        border: 2px solid var(--border-light);
+    }
+
+    .form-check-input:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    .booking-summary {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: var(--box-shadow);
+        position: sticky;
+        top: 120px;
+    }
+
+    .booking-summary h4 {
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--beige);
+    }
+
+    .summary-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: var(--beige);
+        border-radius: 10px;
+    }
+
+    .summary-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+
+    .summary-content h6 {
+        color: var(--primary-color);
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .summary-content p {
+        margin: 0;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+    }
+
+    .summary-notes {
+        background: var(--beige);
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .summary-notes h6 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .summary-notes ul {
+        margin: 0;
+        padding-left: 1.2rem;
+    }
+
+    .summary-notes li {
+        color: var(--text-dark);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .contact-info {
+        text-align: center;
+        padding: 1rem;
+        background: var(--beige);
+        border-radius: 10px;
+    }
+
+    .contact-info h6 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .booking-details {
+        background: var(--beige);
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: left;
+    }
+
+    .booking-details .detail-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .booking-details .detail-label {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+
+    .booking-details .detail-value {
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .booking-form {
+            padding: 2rem 1.5rem;
+        }
+        
+        .booking-summary {
+            margin-top: 2rem;
+            position: static;
+        }
+        
+        .process-steps .col-md-4 {
+            margin-bottom: 2rem;
+        }
+    }
+</style>
+
+</html>
