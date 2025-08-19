@@ -19,7 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('foglalas.urls')),  # Main appointment system (massage salon)
+    path('', include('foglalas.urls')),  # Main appointment system (massage salon) - root access
+    path('foglalas/', include('foglalas.urls')),  # Main appointment system - foglalas prefix access
     path('massage/', include('massage.urls')),  # Dedicated massage service
     path('personal/', include('personal.urls')),  # Personal introduction website
     path('barber/', include('barber.urls')),  # Barber residence website
