@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'foglalas',
     'personal', 
     'barber',
+    'massage',
 ]
 
 MIDDLEWARE = [
