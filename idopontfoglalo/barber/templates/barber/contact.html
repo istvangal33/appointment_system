@@ -1,0 +1,45 @@
+{% extends 'barber/base.html' %}
+
+{% block title %}Kapcsolat - Elite Barber Shop{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-5 fw-bold" style="font-family: 'Oswald', sans-serif;">KAPCSOLAT</h1>
+                <p class="lead text-muted">Vegye fel velünk a kapcsolatot és foglaljon időpontot</p>
+            </div>
+        </div>
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="fas fa-map-marker-alt fa-3x text-primary mb-3"></i>
+                    <h5>Címünk</h5>
+                    <p>1051 Budapest<br>Példa utca 12.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="fas fa-phone fa-3x text-primary mb-3"></i>
+                    <h5>Telefon</h5>
+                    <p>+36 1 234 5678</p>
+                    <a href="tel:+36123456789" class="btn btn-primary">Hívás</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                    <h5>Nyitvatartás</h5>
+                    <p>H-P: 09:00-19:00<br>Szo: 09:00-17:00<br>V: 10:00-16:00</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="/" class="btn btn-primary btn-lg px-5">Online időpontfoglalás</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

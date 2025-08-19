@@ -1,0 +1,108 @@
+{% extends 'personal/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Szia, John Doe vagyok</h1>
+                <p class="lead mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'personal:about' %}" class="btn btn-light btn-lg">Többet rólam</a>
+                    <a href="{% url 'personal:contact' %}" class="btn btn-outline-light btn-lg">Kapcsolat</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <!-- Placeholder for personal photo -->
+                <div class="photo-placeholder bg-light rounded-circle mx-auto" style="width: 300px; height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <i class="fas fa-user fa-5x text-secondary mb-3"></i>
+                        <p class="text-secondary">Személyes fotó helye</p>
+                        <small class="text-muted">300x300px</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Preview -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Röviden magamról</h2>
+                <p class="lead text-muted mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <a href="{% url 'personal:about' %}" class="btn btn-primary">Teljes életrajz</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills/Expertise -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2>Szakterületek</h2>
+                <p class="text-muted">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-code fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Programozás</h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-palette fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Design</h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Tanácsadás</h5>
+                        <p class="card-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="section-padding bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4">Dolgozzunk együtt!</h2>
+                <p class="lead mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <a href="{% url 'personal:contact' %}" class="btn btn-light btn-lg">Vegye fel velem a kapcsolatot</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

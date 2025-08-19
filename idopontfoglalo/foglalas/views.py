@@ -90,10 +90,23 @@ def get_available_times(request):
     except ValueError:
         return JsonResponse({'times': [], 'error': 'bad-date'}, status=400)
 
-    # Generate simple hourly time slots from 8:00 to 16:00 (8 AM to 4 PM)
+    # Generate time slots based on business time_interval setting
     all_times = []
-    for hour in range(8, 17):  # 8:00 to 16:00
-        all_times.append(time(hour=hour, minute=0))
+    interval_minutes = business.time_interval  # 30 or 60 minutes
+    start_hour = 8  # 8:00 AM
+    end_hour = 17   # 5:00 PM (17:00)
+    
+    current_hour = start_hour
+    current_minute = 0
+    
+    while current_hour < end_hour or (current_hour == end_hour and current_minute == 0):
+        all_times.append(time(hour=current_hour, minute=current_minute))
+        
+        # Add interval
+        current_minute += interval_minutes
+        if current_minute >= 60:
+            current_hour += 1
+            current_minute = 0
 
     # Get booked times for this business and date
     booked_times = set(

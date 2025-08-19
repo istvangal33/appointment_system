@@ -1,0 +1,218 @@
+{% extends 'personal/base.html' %}
+
+{% block title %}Rólam - John Doe{% endblock %}
+{% block description %}John Doe részletes életrajza és szakmai háttere.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-5 fw-bold">Rólam</h1>
+                <p class="lead text-muted">Ismerje meg jobban a szakmai utamat és személyiségemet</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Biography -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <!-- Personal Photo Placeholder -->
+                <div class="photo-placeholder bg-light rounded mx-auto" style="width: 100%; height: 400px; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <i class="fas fa-user fa-4x text-secondary mb-3"></i>
+                        <p class="text-secondary">Személyes fotó</p>
+                        <small class="text-muted">400x400px</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <h2 class="mb-4">Szakmai háttér</h2>
+                <p class="mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+                <p class="mb-4">
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+                <p class="mb-4">
+                    Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-5">Szakmai tapasztalat</h2>
+                
+                <div class="timeline">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="badge bg-primary">2020 - Jelenleg</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <h5>Senior pozíció</h5>
+                                    <h6 class="text-muted">Példa Cég Kft.</h6>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="badge bg-secondary">2018 - 2020</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <h5>Junior pozíció</h5>
+                                    <h6 class="text-muted">Másik Cég Zrt.</h6>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="badge bg-secondary">2015 - 2018</span>
+                                </div>
+                                <div class="col-md-9">
+                                    <h5>Gyakornok</h5>
+                                    <h6 class="text-muted">Start-up Kft.</h6>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-5">Tanulmányok</h2>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="fas fa-graduation-cap fa-2x text-primary mb-3"></i>
+                                <h5>Mesterképzés</h5>
+                                <h6 class="text-muted">Példa Egyetem</h6>
+                                <p class="text-muted">2013 - 2015</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <i class="fas fa-university fa-2x text-primary mb-3"></i>
+                                <h5>Alapképzés</h5>
+                                <h6 class="text-muted">Másik Egyetem</h6>
+                                <p class="text-muted">2010 - 2013</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-center mb-5">Készségek és kompetenciák</h2>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Technikai készségek</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Python</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>JavaScript</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Django</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>Soft skills</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Csapatmunka</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Kommunikáció</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Problémamegoldás</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
