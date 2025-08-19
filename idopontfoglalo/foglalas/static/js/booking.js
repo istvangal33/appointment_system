@@ -68,23 +68,64 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function fetchAvailableTimes(business, date) {
+  function fetchAvailableTimes(business, date, retryCount = 0) {
     const timeSelect = document.getElementById('time');
     if (!timeSelect) {
       console.error('Time select element not found');
+      showNotification('Hiba: Az időpont kiválasztó nem található', 'error');
       return;
     }
     
-    console.log('Fetching available times for:', { business, date });
+    // Validate inputs before making API call
+    if (!business || !date) {
+      console.error('Missing required parameters:', { business, date });
+      timeSelect.innerHTML = '<option value="">Hiányozó paraméterek</option>';
+      timeSelect.disabled = true;
+      showNotification('Hiba: Hiányzó paraméterek', 'error');
+      return;
+    }
+
+    // Validate date format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(date)) {
+      console.error('Invalid date format:', date);
+      timeSelect.innerHTML = '<option value="">Érvénytelen dátum formátum</option>';
+      timeSelect.disabled = true;
+      showNotification('Hiba: Érvénytelen dátum formátum', 'error');
+      return;
+    }
     
-    // Show loading state
-    timeSelect.innerHTML = '<option value="">Időpontok betöltése...</option>';
+    console.log('Fetching available times for:', { business, date, retryCount });
+    
+    // Show loading state with retry indicator
+    const loadingText = retryCount > 0 ? 
+      `Időpontok betöltése... (újrapróbálkozás ${retryCount + 1}/3)` : 
+      'Időpontok betöltése...';
+    timeSelect.innerHTML = `<option value="">${loadingText}</option>`;
     timeSelect.disabled = true;
 
     const url = `/api/available-times/?business=${encodeURIComponent(business)}&date=${encodeURIComponent(date)}`;
     console.log('API URL:', url);
 
-    fetch(url, { 
+    const fetchWithTimeout = (url, options, timeout = 10000) => {
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          reject(new Error('Időtúllépés: A kérés túl sokáig tartott'));
+        }, timeout);
+
+        fetch(url, options)
+          .then(response => {
+            clearTimeout(timer);
+            resolve(response);
+          })
+          .catch(error => {
+            clearTimeout(timer);
+            reject(error);
+          });
+      });
+    };
+
+    fetchWithTimeout(url, { 
       headers: { 'Accept': 'application/json' },
       method: 'GET'
     })
@@ -103,8 +144,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (data.error) {
           console.error('API Error:', data.error);
-          timeSelect.innerHTML = '<option value="">Hiba történt az időpontok betöltésekor</option>';
-          timeSelect.disabled = false;
+          
+          // Show specific error messages based on error type
+          let errorMessage = 'Hiba történt az időpontok betöltésekor';
+          let canRetry = true;
+          
+          switch (data.error) {
+            case 'missing-params':
+              errorMessage = 'Hiányozó paraméterek';
+              canRetry = false;
+              break;
+            case 'unknown-business':
+              errorMessage = 'Ismeretlen vállalkozás';
+              canRetry = false;
+              break;
+            case 'bad-date':
+            case 'invalid-date':
+              errorMessage = 'Érvénytelen dátum';
+              canRetry = false;
+              break;
+            case 'past-date':
+              errorMessage = 'Múltbeli dátumra nem lehet időpontot foglalni';
+              canRetry = false;
+              break;
+            case 'server-error':
+              errorMessage = 'Szerver hiba - próbálja újra később';
+              break;
+            default:
+              errorMessage = data.message || 'Hiba történt az időpontok betöltésekor';
+          }
+          
+          timeSelect.innerHTML = `<option value="">${errorMessage}</option>`;
+          timeSelect.disabled = true;
+          
+          // Show retry button for retryable errors
+          if (canRetry && retryCount < 2) {
+            showNotification(`${errorMessage} - Újrapróbálkozás ${retryCount + 2}/3`, 'warning');
+            setTimeout(() => {
+              fetchAvailableTimes(business, date, retryCount + 1);
+            }, 2000 * (retryCount + 1)); // Exponential backoff
+          } else if (canRetry && retryCount >= 2) {
+            showNotification(`${errorMessage} - Kérjük próbálja újra később`, 'error');
+            addRetryButton(business, date);
+          } else {
+            showNotification(errorMessage, 'error');
+          }
           return;
         }
 
@@ -117,23 +201,73 @@ document.addEventListener("DOMContentLoaded", function () {
             timeSelect.appendChild(option);
           });
           timeSelect.disabled = false;
+          
+          if (retryCount > 0) {
+            showNotification('Időpontok sikeresen betöltve', 'success');
+          }
         } else {
           console.log('No available times found');
           timeSelect.innerHTML = '<option value="">Nincs szabad időpont ezen a napon</option>';
-          timeSelect.disabled = false;
+          timeSelect.disabled = true;
+          showNotification('Nincs szabad időpont ezen a napon', 'info');
         }
       })
       .catch(error => {
         console.error('Fetch Error:', error);
-        timeSelect.innerHTML = '<option value="">Hiba történt az időpontok betöltésekor</option>';
-        timeSelect.disabled = false;
+        
+        let errorMessage = 'Hiba történt az időpontok betöltésekor';
+        if (error.message.includes('Időtúllépés')) {
+          errorMessage = 'Időtúllépés - a szerver lassan válaszol';
+        } else if (error.message.includes('Failed to fetch')) {
+          errorMessage = 'Kapcsolati hiba - ellenőrizze az internetkapcsolatát';
+        }
+        
+        timeSelect.innerHTML = `<option value="">${errorMessage}</option>`;
+        timeSelect.disabled = true;
+        
+        // Retry logic for network errors
+        if (retryCount < 2) {
+          showNotification(`${errorMessage} - Újrapróbálkozás ${retryCount + 2}/3`, 'warning');
+          setTimeout(() => {
+            fetchAvailableTimes(business, date, retryCount + 1);
+          }, 3000 * (retryCount + 1)); // Exponential backoff
+        } else {
+          showNotification(`${errorMessage} - Kérjük próbálja újra később`, 'error');
+          addRetryButton(business, date);
+        }
       });
+  }
+
+  // Add retry button for manual retry
+  function addRetryButton(business, date) {
+    const timeSelect = document.getElementById('time');
+    const retryBtn = document.createElement('button');
+    retryBtn.type = 'button';
+    retryBtn.className = 'btn btn-outline-primary btn-sm mt-2';
+    retryBtn.innerHTML = '<i class="fas fa-redo me-1"></i>Újrapróbálkozás';
+    retryBtn.onclick = () => {
+      retryBtn.remove();
+      fetchAvailableTimes(business, date, 0);
+    };
+    
+    // Insert retry button after time select
+    if (timeSelect.parentNode && !document.getElementById('retry-btn')) {
+      retryBtn.id = 'retry-btn';
+      timeSelect.parentNode.insertBefore(retryBtn, timeSelect.nextSibling);
+    }
   }
 
   // Reset time select
   function resetTimeSelect() {
+    const timeSelect = document.getElementById('time');
     timeSelect.innerHTML = '<option value="">Először válassza ki a dátumot</option>';
     timeSelect.disabled = true;
+    
+    // Remove any retry buttons
+    const retryBtn = document.getElementById('retry-btn');
+    if (retryBtn) {
+      retryBtn.remove();
+    }
   }
 
   // Update booking summary
@@ -376,11 +510,22 @@ document.addEventListener("DOMContentLoaded", function () {
   function showNotification(message, type = 'info') {
     // Create notification element
     const notification = document.createElement('div');
-    notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} notification-toast`;
+    
+    // Map notification types to Bootstrap classes and icons
+    const typeMapping = {
+      'error': { class: 'danger', icon: 'exclamation-triangle' },
+      'success': { class: 'success', icon: 'check-circle' },
+      'warning': { class: 'warning', icon: 'exclamation-circle' },
+      'info': { class: 'info', icon: 'info-circle' }
+    };
+    
+    const typeConfig = typeMapping[type] || typeMapping['info'];
+    
+    notification.className = `alert alert-${typeConfig.class} notification-toast alert-dismissible`;
     notification.innerHTML = `
-      <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'} me-2"></i>
+      <i class="fas fa-${typeConfig.icon} me-2"></i>
       ${message}
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
     
     // Add styles
@@ -390,18 +535,39 @@ document.addEventListener("DOMContentLoaded", function () {
       right: 20px;
       z-index: 9999;
       min-width: 300px;
+      max-width: 400px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       animation: slideInRight 0.3s ease;
+      word-wrap: break-word;
     `;
     
     document.body.appendChild(notification);
     
-    // Auto remove after 5 seconds
+    // Auto remove after different times based on type
+    const timeout = type === 'error' ? 8000 : (type === 'warning' ? 6000 : 5000);
     setTimeout(() => {
       if (notification.parentNode) {
-        notification.remove();
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 300);
       }
-    }, 5000);
+    }, timeout);
+    
+    // Handle manual close
+    const closeBtn = notification.querySelector('.btn-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 300);
+      });
+    }
   }
 
   // Get CSRF token

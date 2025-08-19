@@ -541,3 +541,51 @@ h1, h2, h3, h4, h5, h6 {
 .border-primary-custom {
     border-color: var(--primary-color) !important;
 }
+
+/* ====================================
+   NOTIFICATION ANIMATIONS
+   ==================================== */
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.notification-toast {
+    border: none;
+    border-radius: 10px;
+}
+
+.notification-toast .btn-close {
+    font-size: 0.8rem;
+}
+
+/* Retry button styling */
+#retry-btn {
+    border-radius: 20px;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    transition: all 0.3s ease;
+}
+
+#retry-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
