@@ -55,7 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Contact form submitted:', data);
                 
                 // Scroll to message
-                formMessage.scrollIntoView({ behavior: 'smooth' });
+                if (formMessage) {
+                    formMessage.scrollIntoView({ behavior: 'smooth' });
+                }
                 
             }, 2000);
         });
@@ -63,6 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Show message function
     function showMessage(message, type) {
+        if (!formMessage) return;
+        
         formMessage.className = `alert alert-${type}`;
         formMessage.innerHTML = `
             <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
@@ -85,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Form field enhancements
-    const formInputs = contactForm.querySelectorAll('input, textarea, select');
+    const formInputs = contactForm ? contactForm.querySelectorAll('input, textarea, select') : [];
     
     formInputs.forEach(input => {
         // Add floating label effect
