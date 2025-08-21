@@ -3,12 +3,21 @@
 // ====================================
 
 document.addEventListener("DOMContentLoaded", function () {
-  const business = document.getElementById("business").value;
+  // Get elements with null checks
+  const businessElement = document.getElementById("business");
   const bookingForm = document.getElementById("bookingForm");
   const dateInput = document.getElementById("date");
   const timeSelect = document.getElementById("time");
   const selectedDateTime = document.getElementById("selectedDateTime");
   const dateTimeSummary = document.getElementById("dateTimeSummary");
+  
+  // Early return if required elements don't exist
+  if (!businessElement || !bookingForm || !dateInput || !timeSelect) {
+    console.warn('Booking form elements not found, skipping booking system initialization');
+    return;
+  }
+  
+  const business = businessElement.value;
 
   console.log('Booking system initialization started');
   console.log('Business slug:', business);
