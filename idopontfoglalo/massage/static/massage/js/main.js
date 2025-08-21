@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     
     function updateNavbar() {
+        if (!navbar) return;
+        
         if (window.scrollY > 50) {
             navbar.classList.add('navbar-scrolled');
         } else {
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (navbarCollapse.classList.contains('show')) {
+            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                 const bsCollapse = new bootstrap.Collapse(navbarCollapse);
                 bsCollapse.hide();
             }
@@ -103,6 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const heroSection = document.querySelector('.hero-section');
     
     function parallaxEffect() {
+        if (!heroSection) return;
+        
         const scrolled = window.pageYOffset;
         const parallax = heroSection.querySelector('.hero-overlay');
         
