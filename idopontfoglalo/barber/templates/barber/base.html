@@ -1,5 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,127 +12,20 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --primary-color: #D4A574;
-            --secondary-color: #D4A574;
-            --accent-color: #8b4513;
-            --text-dark: #3C2A14;
-            --text-light: #6B5B47;
-            --background-dark: #3C2A14;
-            --background-light: #FAF7F0;
-        }
-        
-        body {
-            font-family: 'Open Sans', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-        }
-        
-        .navbar-brand {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 600;
-            color: var(--primary-color) !important;
-            font-size: 1.8rem;
-        }
-        
-        .hero-section {
-            background: linear-gradient(135deg, var(--background-light) 0%, var(--primary-color) 100%);
-            color: var(--text-dark);
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="scissors" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23scissors)"/></svg>');
-        }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .section-padding {
-            padding: 4rem 0;
-        }
-        
-        .card {
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: white;
-        }
-        
-        .text-primary {
-            color: var(--secondary-color) !important;
-        }
-        
-        .bg-dark-custom {
-            background-color: var(--primary-color) !important;
-        }
-        
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--secondary-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin: 0 auto 1rem;
-        }
-        
-        .price-badge {
-            background: var(--secondary-color);
-            color: var(--primary-color);
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link href="{% static 'barber/css/style.css' %}" rel="stylesheet">
     
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'barber:index' %}">
-                <i class="fas fa-cut me-2" style="color: var(--secondary-color);"></i>
-                ELITE BARBER
+                <i class="fas fa-cut me-2" style="color: var(--orange-primary);"></i>
+                <span class="brand-name">BARBERMATE</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -139,22 +33,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'barber:index' %}">Kezdőlap</a>
+                        <a class="nav-link" href="{% url 'barber:index' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'barber:about' %}">Rólunk</a>
+                        <a class="nav-link" href="{% url 'barber:about' %}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'barber:services' %}">Szolgáltatások</a>
+                        <a class="nav-link" href="{% url 'barber:services' %}">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'barber:gallery' %}">Galéria</a>
+                        <a class="nav-link" href="{% url 'barber:gallery' %}">Gallery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'barber:contact' %}">Kapcsolat</a>
+                        <a class="nav-link" href="{% url 'barber:contact' %}">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-primary px-3 ms-2" href="{% url 'barber:book' %}">Időpont foglalás</a>
+                        <a class="nav-link btn btn-primary px-4 ms-3" href="{% url 'barber:book' %}">BOOK NOW</a>
                     </li>
                 </ul>
             </div>
@@ -166,50 +60,45 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-5">
+    <footer class="footer py-5">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md-4">
                     <h5 class="mb-3">
-                        <i class="fas fa-cut me-2" style="color: var(--secondary-color);"></i>
-                        ELITE BARBER
+                        <i class="fas fa-cut me-2"></i>
+                        BARBERMATE
                     </h5>
-                    <p class="mb-3">Budapest legjobb borbély szalonja. Professzionális szolgáltatások, tapasztalt mesterek.</p>
+                    <p class="mb-3">The best barbershop experience in the city. Professional services by experienced masters.</p>
                     <div class="social-links">
-                        <a href="#" class="text-white me-3 fs-4"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white fs-4"><i class="fab fa-google"></i></a>
+                        <a href="#" class="text-decoration-none me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-decoration-none me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="fab fa-google"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="mb-3">Elérhetőség</h5>
-                    <div class="mb-2">
-                        <i class="fas fa-map-marker-alt me-2" style="color: var(--secondary-color);"></i>
-                        1051 Budapest, Példa utca 12.
-                    </div>
-                    <div class="mb-2">
-                        <i class="fas fa-phone me-2" style="color: var(--secondary-color);"></i>
-                        +36 1 234 5678
-                    </div>
-                    <div class="mb-2">
-                        <i class="fas fa-envelope me-2" style="color: var(--secondary-color);"></i>
-                        info@elitebarber.hu
+                    <h5 class="mb-3">Contact Info</h5>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 1051 Budapest, Example Street 12.</p>
+                        <p><i class="fas fa-phone"></i> +36 1 234 5678</p>
+                        <p><i class="fas fa-envelope"></i> info@barbermate.com</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h5 class="mb-3">Nyitvatartás</h5>
-                    <div class="mb-2">Hétfő - Péntek: 09:00 - 19:00</div>
-                    <div class="mb-2">Szombat: 09:00 - 17:00</div>
-                    <div class="mb-2">Vasárnap: 10:00 - 16:00</div>
+                    <h5 class="mb-3">Opening Hours</h5>
+                    <div class="opening-hours">
+                        <p>Monday - Friday: 09:00 - 19:00</p>
+                        <p>Saturday: 09:00 - 17:00</p>
+                        <p>Sunday: 10:00 - 16:00</p>
+                    </div>
                 </div>
             </div>
             <hr class="my-4">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6">
-                    <p class="mb-0">&copy; 2024 Elite Barber Shop. Minden jog fenntartva.</p>
+                    <p class="mb-0">&copy; 2024 BarberMate. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-end">
-                    <a href="{% url 'barber:book' %}" class="btn btn-primary">Időpont foglalás</a>
+                    <a href="{% url 'barber:book' %}" class="btn btn-primary">BOOK APPOINTMENT</a>
                 </div>
             </div>
         </div>

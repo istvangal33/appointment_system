@@ -1,121 +1,155 @@
 {% extends 'barber/base.html' %}
 
-{% block title %}Szolgáltatások - Elite Barber Shop{% endblock %}
-{% block description %}Elite Barber Shop szolgáltatásai: hajvágás, szakállformázás, arcápolás és prémium borbély élmények.{% endblock %}
+{% block title %}Services - BarberMate{% endblock %}
+{% block description %}BarberMate services: professional haircuts, beard styling, face care and premium barbering experiences.{% endblock %}
 
 {% block content %}
 <!-- Page Header -->
-<section class="py-5 mt-5 bg-light">
+<section class="section-padding-sm bg-dark-secondary">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-5 fw-bold" style="font-family: 'Oswald', sans-serif;">SZOLGÁLTATÁSAINK</h1>
-                <p class="lead text-muted">Professzionális borbély szolgáltatások minden igényre</p>
+                <h1 class="section-title">OUR SERVICES</h1>
+                <p class="section-subtitle">Professional barbering services for every style and need</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Services -->
-<section class="section-padding">
+<section class="services-overview">
     <div class="container">
         <div class="row g-4">
             <!-- Haircuts -->
             <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-cut"></i>
-                        </div>
-                        <h4 class="card-title">Hajvágások</h4>
-                        <ul class="list-unstyled">
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Klasszikus férfi hajvágás</span>
-                                <strong>5.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Modern fade vágás</span>
-                                <strong>6.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Gépi hajvágás</span>
-                                <strong>4.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Hajmosás + vágás</span>
-                                <strong>6.500 Ft</strong>
-                            </li>
-                        </ul>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">Foglalás</a>
+                    <h4>HAIRCUTS</h4>
+                    <ul class="list-unstyled mt-3">
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Classic Men's Haircut</span>
+                            <strong class="text-orange">$25</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Modern Fade Cut</span>
+                            <strong class="text-orange">$30</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Clipper Cut</span>
+                            <strong class="text-orange">$20</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Wash + Cut</span>
+                            <strong class="text-orange">$35</strong>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">BOOK NOW</a>
                     </div>
                 </div>
             </div>
 
             <!-- Beard Services -->
             <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h4 class="card-title">Szakállformázás</h4>
-                        <ul class="list-unstyled">
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Szakáll trimmelés</span>
-                                <strong>3.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Bajusz formázás</span>
-                                <strong>2.500 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Teljes szakáll styling</span>
-                                <strong>4.500 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Szakáll olaj kezelés</span>
-                                <strong>3.500 Ft</strong>
-                            </li>
-                        </ul>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">Foglalás</a>
+                    <h4>BEARD STYLING</h4>
+                    <ul class="list-unstyled mt-3">
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Beard Trimming</span>
+                            <strong class="text-orange">$15</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Mustache Styling</span>
+                            <strong class="text-orange">$12</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Full Beard Styling</span>
+                            <strong class="text-orange">$22</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Beard Oil Treatment</span>
+                            <strong class="text-orange">$18</strong>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">BOOK NOW</a>
                     </div>
                 </div>
             </div>
 
             <!-- Face Care -->
             <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-spa"></i>
-                        </div>
-                        <h4 class="card-title">Arcápolás</h4>
-                        <ul class="list-unstyled">
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Hagyományos borotválkozás</span>
-                                <strong>8.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Arcmaszk kezelés</span>
-                                <strong>6.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Szemöldök formázás</span>
-                                <strong>2.000 Ft</strong>
-                            </li>
-                            <li class="d-flex justify-content-between mb-2">
-                                <span>Teljes arc wellness</span>
-                                <strong>12.000 Ft</strong>
-                            </li>
-                        </ul>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">Foglalás</a>
+                    <h4>FACE CARE</h4>
+                    <ul class="list-unstyled mt-3">
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Traditional Wet Shave</span>
+                            <strong class="text-orange">$40</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Face Mask Treatment</span>
+                            <strong class="text-orange">$30</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Eyebrow Trimming</span>
+                            <strong class="text-orange">$10</strong>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 text-gray-custom">
+                            <span>Complete Face Wellness</span>
+                            <strong class="text-orange">$60</strong>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'barber:book' %}" class="btn btn-primary w-100">BOOK NOW</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Premium Services Section -->
+        <div class="service-two-column mt-5">
+            <div class="service-content">
+                <h3 class="text-orange">PREMIUM EXPERIENCE</h3>
+                <h4>COMPLETE GROOMING PACKAGES</h4>
+                <p>Transform your look with our comprehensive grooming packages. Each service includes premium products, hot towel treatment, and personalized styling consultation.</p>
+                <a href="#" class="video-link">See Video <i class="fas fa-play-circle ms-2"></i></a>
+            </div>
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <button class="play-button">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <div class="image-placeholder-content">
+                        <p>PREMIUM SERVICES VIDEO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">READY FOR YOUR NEW LOOK?</h2>
+                <p class="cta-subtitle">
+                    Book your appointment today and experience the BarberMate difference.
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'barber:book' %}" class="btn btn-cta-white">BOOK APPOINTMENT</a>
+                    <a href="tel:+36123456789" class="btn btn-cta-outline">
+                        <i class="fas fa-phone me-2"></i>CALL NOW
+                    </a>
                 </div>
             </div>
         </div>

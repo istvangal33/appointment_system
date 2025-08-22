@@ -1,28 +1,161 @@
 {% extends 'barber/base.html' %}
 
-{% block title %}Galéria - Elite Barber Shop{% endblock %}
+{% block title %}Gallery - BarberMate{% endblock %}
+{% block description %}BarberMate gallery - showcase of our work, inspirations and results from our professional barbers.{% endblock %}
 
 {% block content %}
-<section class="py-5 mt-5">
+<!-- Page Header -->
+<section class="section-padding-sm bg-dark-secondary">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-5 fw-bold" style="font-family: 'Oswald', sans-serif;">GALÉRIA</h1>
-                <p class="lead text-muted">Munkáink galériája - inspirációk és eredmények</p>
+                <h1 class="section-title">OUR GALLERY</h1>
+                <p class="section-subtitle">Showcase of our craftsmanship - inspirations and results</p>
             </div>
         </div>
-        <div class="row g-3 mt-4">
-            {% for i in "123456789" %}
+    </div>
+</section>
+
+<!-- Gallery Grid -->
+<section class="gallery-section">
+    <div class="container">
+        <!-- Filter Buttons -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-orange active">ALL WORK</button>
+                    <button type="button" class="btn btn-outline-orange">HAIRCUTS</button>
+                    <button type="button" class="btn btn-outline-orange">BEARD STYLING</button>
+                    <button type="button" class="btn btn-outline-orange">FACE CARE</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gallery Items -->
+        <div class="row g-3">
+            {% for i in "123456789012" %}
             <div class="col-lg-4 col-md-6">
-                <div class="gallery-item bg-light rounded shadow" style="height: 300px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center">
-                        <i class="fas fa-camera fa-3x text-secondary mb-3"></i>
-                        <p class="text-secondary">Galéria kép #{{ i }}</p>
-                        <small class="text-muted">400x300px</small>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder-content">
+                        <i class="fas fa-camera"></i>
+                        {% if forloop.counter <= 4 %}
+                            <p>Classic Haircut #{{ forloop.counter }}</p>
+                        {% elif forloop.counter <= 8 %}
+                            <p>Beard Styling #{{ forloop.counter|add:"-4" }}</p>
+                        {% else %}
+                            <p>Face Care #{{ forloop.counter|add:"-8" }}</p>
+                        {% endif %}
+                    </div>
+                    <!-- Overlay for hover effect -->
+                    <div class="gallery-overlay">
+                        <button class="play-button">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
             {% endfor %}
+        </div>
+        
+        <!-- Load More Button -->
+        <div class="text-center mt-5">
+            <button class="btn btn-primary btn-lg">LOAD MORE WORK</button>
+        </div>
+    </div>
+</section>
+
+<!-- Before & After Section -->
+<section class="services-overview">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">BEFORE & AFTER</h2>
+                <p class="section-subtitle">See the amazing transformations we create for our clients</p>
+            </div>
+        </div>
+        
+        <div class="service-two-column mb-5">
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <div class="image-placeholder-content">
+                        <i class="fas fa-before-and-after" style="font-size: 3rem;"></i>
+                        <p>TRANSFORMATION #1</p>
+                        <small>BEFORE & AFTER</small>
+                    </div>
+                </div>
+            </div>
+            <div class="service-content">
+                <h3 class="text-orange">CLASSIC MAKEOVER</h3>
+                <h4>COMPLETE STYLE TRANSFORMATION</h4>
+                <p>This client wanted a complete style change from a casual look to a sharp, professional appearance. Our master barber created a modern fade cut with precise beard styling.</p>
+                <a href="#" class="video-link">Watch Process Video <i class="fas fa-play-circle ms-2"></i></a>
+            </div>
+        </div>
+        
+        <div class="service-two-column">
+            <div class="service-content">
+                <h3 class="text-orange">BEARD TRANSFORMATION</h3>
+                <h4>FROM WILD TO REFINED</h4>
+                <p>A complete beard makeover showcasing our expertise in facial hair styling. We transformed an untamed beard into a perfectly sculpted masterpiece.</p>
+                <a href="#" class="video-link">See Full Process <i class="fas fa-play-circle ms-2"></i></a>
+            </div>
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <div class="image-placeholder-content">
+                        <i class="fas fa-user-tie" style="font-size: 3rem;"></i>
+                        <p>TRANSFORMATION #2</p>
+                        <small>BEARD MAKEOVER</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Client Stories -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">CLIENT STORIES</h2>
+                <p class="section-subtitle">Real transformations, real satisfaction</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"I never thought I could look this good! The transformation was incredible. The barber understood exactly what I wanted and delivered beyond my expectations."</p>
+                    <h6>Robert Wilson</h6>
+                    <small>Marketing Manager</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"The before and after photos speak for themselves. Professional service, amazing results, and a great experience overall. Highly recommended!"</p>
+                    <h6>Thomas Anderson</h6>
+                    <small>Business Owner</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">READY FOR YOUR TRANSFORMATION?</h2>
+                <p class="cta-subtitle">
+                    Let our master barbers create your perfect look. Book your appointment today!
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'barber:book' %}" class="btn btn-cta-white">BOOK NOW</a>
+                    <a href="{% url 'barber:services' %}" class="btn btn-cta-outline">VIEW SERVICES</a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
