@@ -61,9 +61,9 @@ def ensure_businesses_exist():
 
 # Homepage view
 def index(request):
-    """Homepage - Hero section with service overview"""
+    """Homepage - Hero section with service overview for personal consultation"""
     ensure_businesses_exist()
-    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    business = Business.objects.filter(slug='szakertoi-tanacsadas').first()
     services = Service.objects.filter(business=business)[:4] if business else []
     return render(request, 'foglalas/index.html', {
         'business': business,
@@ -72,9 +72,9 @@ def index(request):
 
 # About page view  
 def about(request):
-    """About page - Salon details, philosophy, services with prices"""
+    """About page - Personal consultation details, philosophy, services with prices"""
     ensure_businesses_exist()
-    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    business = Business.objects.filter(slug='szakertoi-tanacsadas').first()
     services = Service.objects.filter(business=business) if business else []
     return render(request, 'foglalas/about.html', {
         'business': business,
@@ -85,15 +85,15 @@ def about(request):
 def contact(request):
     """Contact page - Contact info, hours, map, contact form"""
     ensure_businesses_exist()
-    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    business = Business.objects.filter(slug='szakertoi-tanacsadas').first()
     return render(request, 'foglalas/contact.html', {
         'business': business
     })
 
 # Updated booking form view
 def foglalas_form(request):
-    """Booking form for massage salon"""
-    business = Business.objects.filter(slug='harmonia-masszazs').first()
+    """Booking form for personal consultation"""
+    business = Business.objects.filter(slug='szakertoi-tanacsadas').first()
     return render(request, 'foglalas/book.html', {
         'business': business
     })
@@ -108,7 +108,7 @@ def book_appointment(request):
             logger.info(f"book_appointment called")
             data = json.loads(request.body)
             slug = data.get('business')
-            service_type = data.get('service_type', 'massage')  # Default to massage for backward compatibility
+            service_type = data.get('service_type', 'personal')  # Default to personal for foglalas app
 
             # Validate required fields
             required_fields = ['business', 'name', 'phone', 'email', 'date', 'time']

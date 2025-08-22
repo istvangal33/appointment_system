@@ -28,7 +28,7 @@ def about(request):
 
 def book(request):
     """Booking form for barber shop"""
-    business = Business.objects.filter(slug='elite-barber').first()
+    business = Business.objects.filter(slug='barber').first()
     return render(request, 'barber/book.html', {
         'business': business
     })
