@@ -16,10 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import Http404
+
+
+def empty_root(request):
+    """Empty root view - no content should be served at root URL"""
+    raise Http404("No content available at root URL")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Root URL removed - no content should be served at root
+    path('', empty_root, name='root'),  # Root URL - no content should be served at root
     path('foglalas/', include('foglalas.urls')),  # Main appointment system - foglalas prefix access
     path('massage/', include('massage.urls')),  # Dedicated massage service
     path('personal/', include('personal.urls')),  # Personal introduction website
