@@ -19,7 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('foglalas.urls')),  # Main appointment system (massage salon) - root access
+    # Root URL removed - no content should be served at root
     path('foglalas/', include('foglalas.urls')),  # Main appointment system - foglalas prefix access
     path('massage/', include('massage.urls')),  # Dedicated massage service
     path('personal/', include('personal.urls')),  # Personal introduction website
