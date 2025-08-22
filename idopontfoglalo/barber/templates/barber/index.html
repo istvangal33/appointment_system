@@ -1,32 +1,38 @@
 {% extends 'barber/base.html' %}
 
+{% block title %}BarberMate - Find Your Perfect Haircut Easily{% endblock %}
+{% block description %}BarberMate - The best barbershop experience. Professional haircuts, beard styling, and premium grooming services.{% endblock %}
+
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-section">
-    <div class="hero-content">
-        <div class="container">
-            <div class="row align-items-center">
+    <div class="hero-overlay">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-3 fw-bold mb-4" style="font-family: 'Oswald', sans-serif;">
-                        ELIT BORBÉLY<br>
-                        <span style="color: var(--secondary-color);">SZOLGÁLTATÁSOK</span>
-                    </h1>
-                    <p class="lead mb-4">
-                        Tapasztalt mesterek, prémium eszközök és egyedi stílus. 
-                        Fedezze fel Budapest legjobb borbély élményét.
-                    </p>
-                    <div class="d-flex gap-3">
-                        <a href="{% url 'barber:book' %}" class="btn btn-primary btn-lg px-4">Időpont foglalás</a>
-                        <a href="{% url 'barber:services' %}" class="btn btn-outline-light btn-lg px-4">Szolgáltatások</a>
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            FIND YOUR PERFECT<br>
+                            <span class="text-orange">HAIRCUT EASILY!</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Experience the ultimate barbershop service with our skilled masters, 
+                            premium tools, and personalized styling approach.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="{% url 'barber:book' %}" class="btn btn-hero-primary">FIND YOUR BARBER</a>
+                            <a href="{% url 'barber:services' %}" class="btn btn-hero-outline">VIEW SERVICES</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6 text-center">
-                    <!-- Hero Image Placeholder -->
-                    <div class="hero-image bg-light rounded shadow" style="height: 400px; display: flex; align-items: center; justify-content: center;">
-                        <div class="text-center">
-                            <i class="fas fa-cut fa-5x text-secondary mb-3"></i>
-                            <h4 class="text-secondary">Szalon fotó helye</h4>
-                            <small class="text-muted">600x400px</small>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <div class="hero-image-placeholder">
+                            <div class="image-placeholder-content">
+                                <i class="fas fa-cut floating"></i>
+                                <h4>Professional Barbershop</h4>
+                                <small>Premium Service Experience</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,174 +41,217 @@
     </div>
 </section>
 
-<!-- Services Preview -->
-<section class="section-padding bg-light">
+<!-- WHAT WE DO FOR YOU -->
+<section class="services-overview">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="mb-4" style="font-family: 'Oswald', sans-serif;">SZOLGÁLTATÁSAINK</h2>
-                <p class="lead text-muted">Professzionális férfi hajvágás és szépségápolási szolgáltatások</p>
+                <h2 class="section-title">WHAT WE DO FOR YOU</h2>
+                <p class="section-subtitle">Professional barbering services tailored to your style</p>
             </div>
         </div>
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-cut"></i>
-                        </div>
-                        <h5 class="card-title">Hajvágás</h5>
-                        <p class="card-text">Klasszikus és modern hajvágások tapasztalt mestereink által.</p>
-                        <div class="price-badge">5.000 Ft-tól</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
                     </div>
+                    <h4>HAIRCUTS</h4>
+                    <p>Classic and modern haircuts by experienced masters using premium techniques.</p>
+                    <div class="price-badge">FROM $25</div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h5 class="card-title">Szakállformázás</h5>
-                        <p class="card-text">Precíz szakállformázás és bajuszstílus kialakítás.</p>
-                        <div class="price-badge">3.000 Ft-tól</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-tie"></i>
                     </div>
+                    <h4>BEARD STYLING</h4>
+                    <p>Precise beard trimming and mustache styling for the perfect masculine look.</p>
+                    <div class="price-badge">FROM $15</div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-                        <div class="service-icon">
-                            <i class="fas fa-spa"></i>
-                        </div>
-                        <h5 class="card-title">Arcápolás</h5>
-                        <p class="card-text">Relaxáló arckezelések és tradicionális borotválkozás.</p>
-                        <div class="price-badge">8.000 Ft-tól</div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <h4>FACE CARE</h4>
+                    <p>Relaxing face treatments and traditional wet shaving experience.</p>
+                    <div class="price-badge">FROM $40</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Two-column service presentation -->
+        <div class="service-two-column mt-5">
+            <div class="service-content">
+                <h3 class="text-orange">PRECISION CUTS</h3>
+                <h4>MASTER CRAFTSMANSHIP</h4>
+                <p>Our skilled barbers combine traditional techniques with modern styles to create the perfect look for every client. Each cut is tailored to your face shape and personal style.</p>
+                <a href="#" class="video-link">See Video <i class="fas fa-play-circle ms-2"></i></a>
+            </div>
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <button class="play-button">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <div class="image-placeholder-content">
+                        <p>HAIRCUT SHOWCASE VIDEO</p>
                     </div>
                 </div>
             </div>
         </div>
+        
         <div class="text-center mt-5">
-            <a href="{% url 'barber:services' %}" class="btn btn-primary btn-lg">Összes szolgáltatás</a>
+            <a href="{% url 'barber:services' %}" class="btn btn-primary btn-lg">VIEW ALL SERVICES</a>
         </div>
     </div>
 </section>
 
-<!-- Why Choose Us -->
-<section class="section-padding">
+<!-- MEET OUR BARBERS -->
+<section class="why-choose-us">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="mb-4" style="font-family: 'Oswald', sans-serif;">MIÉRT VÁLASSZON MINKET?</h2>
-                <p class="lead text-muted">Több mint 15 éves tapasztalat a borbély szakmában</p>
+                <h2 class="section-title">MEET OUR BARBERS</h2>
+                <p class="section-subtitle">Experienced professionals dedicated to your perfect style</p>
             </div>
         </div>
         <div class="row g-4">
             <div class="col-lg-3 col-md-6">
-                <div class="text-center">
-                    <i class="fas fa-award fa-3x text-primary mb-3"></i>
-                    <h5>Tapasztalt mesterek</h5>
-                    <p class="text-muted">Több évtizedes tapasztalattal rendelkező borbélyok</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h4>AWARD WINNING</h4>
+                    <p>Our barbers have decades of experience and industry recognition</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="text-center">
-                    <i class="fas fa-gem fa-3x text-primary mb-3"></i>
-                    <h5>Prémium eszközök</h5>
-                    <p class="text-muted">Csak a legjobb minőségű eszközöket és termékeket használjuk</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4>PREMIUM TOOLS</h4>
+                    <p>We use only the finest professional equipment and products</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="text-center">
-                    <i class="fas fa-clock fa-3x text-primary mb-3"></i>
-                    <h5>Időpont garancia</h5>
-                    <p class="text-muted">Pontosság és megbízhatóság minden foglaláskor</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>ON-TIME SERVICE</h4>
+                    <p>Punctuality and reliability with every appointment</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="text-center">
-                    <i class="fas fa-handshake fa-3x text-primary mb-3"></i>
-                    <h5>Személyes megközelítés</h5>
-                    <p class="text-muted">Minden ügyfélre szabott egyedi stílus és kiszolgálás</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>PERSONAL APPROACH</h4>
+                    <p>Customized styling and personalized service for every client</p>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Second two-column section -->
+        <div class="service-two-column mt-5">
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <button class="play-button">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <div class="image-placeholder-content">
+                        <p>MEET THE TEAM VIDEO</p>
+                    </div>
+                </div>
+            </div>
+            <div class="service-content">
+                <h3 class="text-orange">MASTER BARBERS</h3>
+                <h4>EXPERTISE & PASSION</h4>
+                <p>Meet our team of professional barbers who bring years of experience and passion to every cut. Each master specializes in different techniques and styles.</p>
+                <a href="#" class="video-link">See Video <i class="fas fa-play-circle ms-2"></i></a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Gallery Preview -->
-<section class="section-padding bg-light">
+<section class="gallery-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="mb-4" style="font-family: 'Oswald', sans-serif;">MUNKÁINKBÓL</h2>
-                <p class="lead text-muted">Tekintse meg alkotásainkat és inspirálódjon</p>
+                <h2 class="section-title">OUR WORK GALLERY</h2>
+                <p class="section-subtitle">See our craftsmanship and get inspired</p>
             </div>
         </div>
         <div class="row g-3">
             <div class="col-lg-4 col-md-6">
-                <div class="gallery-item bg-light rounded shadow" style="height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center">
-                        <i class="fas fa-camera fa-2x text-secondary mb-2"></i>
-                        <p class="text-secondary">Hajvágás #1</p>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder-content">
+                        <i class="fas fa-camera"></i>
+                        <p>Classic Haircut #1</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="gallery-item bg-light rounded shadow" style="height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center">
-                        <i class="fas fa-camera fa-2x text-secondary mb-2"></i>
-                        <p class="text-secondary">Szakállformázás #1</p>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder-content">
+                        <i class="fas fa-camera"></i>
+                        <p>Beard Styling #1</p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
-                <div class="gallery-item bg-light rounded shadow" style="height: 250px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center">
-                        <i class="fas fa-camera fa-2x text-secondary mb-2"></i>
-                        <p class="text-secondary">Klasszikus stílus #1</p>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder-content">
+                        <i class="fas fa-camera"></i>
+                        <p>Modern Style #1</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center mt-5">
-            <a href="{% url 'barber:gallery' %}" class="btn btn-primary btn-lg">Teljes galéria</a>
+            <a href="{% url 'barber:gallery' %}" class="btn btn-primary btn-lg">VIEW FULL GALLERY</a>
         </div>
     </div>
 </section>
 
 <!-- Testimonials -->
-<section class="section-padding bg-dark-custom text-white">
+<section class="testimonials-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center mb-5">
-                <h2 class="mb-4" style="font-family: 'Oswald', sans-serif;">ÜGYFELEINK VÉLEMÉNYE</h2>
-                <p class="lead">Mit mondanak rólunk azok, akik már kipróbálták szolgáltatásainkat</p>
+                <h2 class="section-title">CLIENT TESTIMONIALS</h2>
+                <p class="section-subtitle">What our satisfied customers say about us</p>
             </div>
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-quote-left fa-2x mb-3" style="color: var(--secondary-color);"></i>
-                    <p class="mb-4">"Fantasztikus élmény! Professzionális kiszolgálás és tökéletes hajvágás. Mindenképpen visszajövök!"</p>
-                    <h6>Kovács Péter</h6>
-                    <small class="text-muted">Ügyvezető</small>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Amazing experience! Professional service and perfect haircut. Definitely coming back!"</p>
+                    <h6>Peter Johnson</h6>
+                    <small>Business Executive</small>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-quote-left fa-2x mb-3" style="color: var(--secondary-color);"></i>
-                    <p class="mb-4">"Végre találtam egy helyett, ahol megértik, mit szeretnék. Kiváló szakemberek dolgoznak itt."</p>
-                    <h6>Nagy András</h6>
-                    <small class="text-muted">Mérnök</small>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Finally found a place that understands what I want. Excellent professionals work here."</p>
+                    <h6>Andrew Smith</h6>
+                    <small>Engineer</small>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-quote-left fa-2x mb-3" style="color: var(--secondary-color);"></i>
-                    <p class="mb-4">"A legjobb borbély élmény Budapesten! Precíz munka és kellemes légkör."</p>
-                    <h6>Szabó Gábor</h6>
-                    <small class="text-muted">Vállalkozó</small>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Best barbershop experience in the city! Precise work and pleasant atmosphere."</p>
+                    <h6>Gabriel Brown</h6>
+                    <small>Entrepreneur</small>
                 </div>
             </div>
         </div>
@@ -210,18 +259,18 @@
 </section>
 
 <!-- Contact CTA -->
-<section class="section-padding bg-primary text-dark">
+<section class="cta-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h2 class="mb-4" style="font-family: 'Oswald', sans-serif;">FOGLALJON IDŐPONTOT MÁR MA!</h2>
-                <p class="lead mb-4">
-                    Ne várjon tovább! Tapasztalja meg Budapest legjobb borbély szolgáltatásait.
+                <h2 class="cta-title">BOOK YOUR APPOINTMENT TODAY!</h2>
+                <p class="cta-subtitle">
+                    Don't wait any longer! Experience the best barbershop services in the city.
                 </p>
-                <div class="d-flex gap-3 justify-content-center">
-                    <a href="{% url 'barber:book' %}" class="btn btn-dark btn-lg px-4">Online foglalás</a>
-                    <a href="tel:+36123456789" class="btn btn-outline-dark btn-lg px-4">
-                        <i class="fas fa-phone me-2"></i>Telefonos foglalás
+                <div class="cta-buttons">
+                    <a href="{% url 'barber:book' %}" class="btn btn-cta-white">ONLINE BOOKING</a>
+                    <a href="tel:+36123456789" class="btn btn-cta-outline">
+                        <i class="fas fa-phone me-2"></i>CALL US NOW
                     </a>
                 </div>
             </div>
