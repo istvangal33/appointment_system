@@ -1,0 +1,44 @@
+[
+  {
+    "model": "foglalas.business",
+    "pk": 1,
+    "fields": {
+      "name": "Stílus Fodrászat",
+      "slug": "stilus-fodraszat",
+      "description": "Professzionális fodrász szolgáltatások minden korosztály számára.",
+      "address": "1052 Budapest, Váci utca 15.",
+      "phone": "+36 1 234 5678",
+      "email": "info@stilusfodraszat.hu",
+      "logo": null,
+      "time_interval": 30
+    }
+  },
+  {
+    "model": "foglalas.business",
+    "pk": 2,
+    "fields": {
+      "name": "Harmónia Masszázs Szalon",
+      "slug": "harmonia-masszazs",
+      "description": "Relaxáló masszázs és wellness szolgáltatások a belvárosban.",
+      "address": "1051 Budapest, József Attila utca 12.",
+      "phone": "+36 1 345 6789",
+      "email": "info@harmoniamasszazs.hu",
+      "logo": null,
+      "time_interval": 60
+    }
+  },
+  {
+    "model": "foglalas.business",
+    "pk": 3,
+    "fields": {
+      "name": "Szakértői Tanácsadás",
+      "slug": "szakertoi-tanacsadas",
+      "description": "Személyre szabott konzultáció és szakértői tanácsadás.",
+      "address": "1053 Budapest, Kossuth Lajos utca 8.",
+      "phone": "+36 1 456 7890",
+      "email": "info@szakertoi-tanacsadas.hu",
+      "logo": null,
+      "time_interval": 60
+    }
+  }
+]

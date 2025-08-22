@@ -7,13 +7,62 @@ from datetime import time
 import json
 import logging
 from datetime import time, datetime
+from django.db import transaction
 
 # Set up logging
 logger = logging.getLogger(__name__)
 
+
+def ensure_businesses_exist():
+    """Ensure basic businesses exist in the database, create them if missing"""
+    if Business.objects.exists():
+        return  # Businesses already exist
+    
+    logger.info("No businesses found in database, creating initial businesses...")
+    
+    businesses_data = [
+        {
+            'name': 'Stílus Fodrászat',
+            'slug': 'stilus-fodraszat',
+            'description': 'Professzionális fodrász szolgáltatások minden korosztály számára.',
+            'address': '1052 Budapest, Váci utca 15.',
+            'phone': '+36 1 234 5678',
+            'email': 'info@stilusfodraszat.hu',
+            'time_interval': 30,
+        },
+        {
+            'name': 'Harmónia Masszázs Szalon',
+            'slug': 'harmonia-masszazs',
+            'description': 'Relaxáló masszázs és wellness szolgáltatások a belvárosban.',
+            'address': '1051 Budapest, József Attila utca 12.',
+            'phone': '+36 1 345 6789',
+            'email': 'info@harmoniamasszazs.hu',
+            'time_interval': 60,
+        },
+        {
+            'name': 'Szakértői Tanácsadás',
+            'slug': 'szakertoi-tanacsadas',
+            'description': 'Személyre szabott konzultáció és szakértői tanácsadás.',
+            'address': '1053 Budapest, Kossuth Lajos utca 8.',
+            'phone': '+36 1 456 7890',
+            'email': 'info@szakertoi-tanacsadas.hu',
+            'time_interval': 60,
+        }
+    ]
+    
+    try:
+        with transaction.atomic():
+            for business_data in businesses_data:
+                Business.objects.create(**business_data)
+        logger.info(f"Successfully created {len(businesses_data)} businesses")
+    except Exception as e:
+        logger.error(f"Failed to create businesses: {e}")
+
+
 # Homepage view
 def index(request):
     """Homepage - Hero section with service overview"""
+    ensure_businesses_exist()
     business = Business.objects.filter(slug='harmonia-masszazs').first()
     services = Service.objects.filter(business=business)[:4] if business else []
     return render(request, 'foglalas/index.html', {
@@ -24,6 +73,7 @@ def index(request):
 # About page view  
 def about(request):
     """About page - Salon details, philosophy, services with prices"""
+    ensure_businesses_exist()
     business = Business.objects.filter(slug='harmonia-masszazs').first()
     services = Service.objects.filter(business=business) if business else []
     return render(request, 'foglalas/about.html', {
@@ -34,6 +84,7 @@ def about(request):
 # Contact page view
 def contact(request):
     """Contact page - Contact info, hours, map, contact form"""
+    ensure_businesses_exist()
     business = Business.objects.filter(slug='harmonia-masszazs').first()
     return render(request, 'foglalas/contact.html', {
         'business': business
@@ -273,9 +324,11 @@ def get_slots(request):
         
         # Try to get business from database
         try:
+            # Ensure businesses exist before trying to get them
+            ensure_businesses_exist()
             business = Business.objects.first()  # Use first available business
             if not business:
-                logger.warning("No business found in database")
+                logger.warning("No business found in database even after initialization attempt")
                 # Return mock data with warning if no business exists
                 mock_slots = [
                     {"start": "09:00", "end": "09:30"},
