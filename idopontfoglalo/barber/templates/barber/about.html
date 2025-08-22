@@ -1,37 +1,174 @@
 {% extends 'barber/base.html' %}
 
-{% block title %}Rólunk - Elite Barber Shop{% endblock %}
+{% block title %}About Us - BarberMate{% endblock %}
+{% block description %}Meet the BarberMate team and discover our story. Professional barbers dedicated to excellence.{% endblock %}
 
 {% block content %}
-<section class="py-5 mt-5">
+<!-- Page Header -->
+<section class="section-padding-sm bg-dark-secondary">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-5 fw-bold" style="font-family: 'Oswald', sans-serif;">RÓLUNK</h1>
-                <p class="lead text-muted">Ismerje meg csapatunkat és történetünket</p>
+                <h1 class="section-title">ABOUT US</h1>
+                <p class="section-subtitle">Meet our team and discover our barbershop story</p>
             </div>
         </div>
-        <div class="row align-items-center mt-5">
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="why-choose-us">
+    <div class="container">
+        <div class="row align-items-center">
             <div class="col-lg-6">
-                <div class="bg-light rounded" style="height: 400px; display: flex; align-items: center; justify-content: center;">
-                    <div class="text-center">
-                        <i class="fas fa-store fa-5x text-secondary mb-3"></i>
-                        <p class="text-secondary">Szalon fotó</p>
+                <div class="hero-image-placeholder">
+                    <div class="image-placeholder-content">
+                        <i class="fas fa-store floating" style="font-size: 4rem; color: var(--orange-primary);"></i>
+                        <h4>Our Barbershop</h4>
+                        <small>Modern & Professional</small>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <h2 class="mb-4">Történetünk</h2>
-                <p class="mb-4">
-                    Az Elite Barber Shop 2008-ban nyílt meg Budapest szívében. Több mint 15 éves tapasztalattal 
-                    rendelkezünk a borbély szakmában, és büszkék vagyunk arra, hogy a város egyik legjobb 
-                    borbély szalonjaként ismert.
+                <div class="service-content">
+                    <h3 class="text-orange">OUR STORY</h3>
+                    <h2>TRADITION MEETS INNOVATION</h2>
+                    <p class="mb-4">
+                        BarberMate opened its doors in 2010 in the heart of the city. With over 15 years 
+                        of experience in the barbering industry, we take pride in being recognized as one 
+                        of the city's premier barbershops.
+                    </p>
+                    <p class="mb-4">
+                        Our team consists of experienced masters who are passionate about delivering 
+                        the best possible experience for every client. We use only premium quality 
+                        tools and products to ensure exceptional results.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'barber:services' %}" class="btn btn-primary">VIEW SERVICES</a>
+                        <a href="{% url 'barber:book' %}" class="btn btn-outline-orange">BOOK NOW</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="services-overview">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">MEET OUR MASTERS</h2>
+                <p class="section-subtitle">Skilled professionals dedicated to your perfect style</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="hero-image-placeholder mb-3" style="height: 200px;">
+                        <div class="image-placeholder-content">
+                            <i class="fas fa-user-circle" style="font-size: 3rem; color: var(--orange-primary);"></i>
+                            <h5>Master Photo</h5>
+                        </div>
+                    </div>
+                    <h4>JAMES SMITH</h4>
+                    <div class="price-badge mb-3">HEAD BARBER</div>
+                    <p>15+ years of experience in classic and modern cuts. Specialized in fade techniques and beard styling.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="hero-image-placeholder mb-3" style="height: 200px;">
+                        <div class="image-placeholder-content">
+                            <i class="fas fa-user-circle" style="font-size: 3rem; color: var(--orange-primary);"></i>
+                            <h5>Master Photo</h5>
+                        </div>
+                    </div>
+                    <h4>MICHAEL JOHNSON</h4>
+                    <div class="price-badge mb-3">SENIOR BARBER</div>
+                    <p>Expert in traditional wet shaving and face care treatments. Master of classic barbering techniques.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card">
+                    <div class="hero-image-placeholder mb-3" style="height: 200px;">
+                        <div class="image-placeholder-content">
+                            <i class="fas fa-user-circle" style="font-size: 3rem; color: var(--orange-primary);"></i>
+                            <h5>Master Photo</h5>
+                        </div>
+                    </div>
+                    <h4>DAVID BROWN</h4>
+                    <div class="price-badge mb-3">STYLE EXPERT</div>
+                    <p>Trendsetter specializing in modern styles and creative cuts. Expert in beard design and styling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="why-choose-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">OUR VALUES</h2>
+                <p class="section-subtitle">What makes BarberMate special</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>PASSION</h4>
+                    <p>We love what we do and it shows in every cut, shave, and styling service we provide.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4>EXCELLENCE</h4>
+                    <p>Committed to delivering the highest quality service with attention to every detail.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>COMMUNITY</h4>
+                    <p>Building lasting relationships with our clients and being part of the local community.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>INNOVATION</h4>
+                    <p>Constantly learning new techniques and staying current with the latest trends and styles.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">EXPERIENCE THE DIFFERENCE</h2>
+                <p class="cta-subtitle">
+                    Join thousands of satisfied customers who trust BarberMate for their grooming needs.
                 </p>
-                <p class="mb-4">
-                    Csapatunk tapasztalt mesterekből áll, akik szenvedélyesen dolgoznak azért, hogy minden 
-                    ügyfél a lehető legjobb élményben részesüljön. Csak prémium minőségű eszközöket és 
-                    termékeket használunk.
-                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'barber:book' %}" class="btn btn-cta-white">BOOK YOUR VISIT</a>
+                    <a href="{% url 'barber:contact' %}" class="btn btn-cta-outline">GET IN TOUCH</a>
+                </div>
             </div>
         </div>
     </div>

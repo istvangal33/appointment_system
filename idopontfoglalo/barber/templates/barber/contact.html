@@ -1,43 +1,200 @@
 {% extends 'barber/base.html' %}
 
-{% block title %}Kapcsolat - Elite Barber Shop{% endblock %}
+{% block title %}Contact - BarberMate{% endblock %}
+{% block description %}Contact BarberMate - get in touch and book your appointment. Visit us for the best barbershop experience.{% endblock %}
 
 {% block content %}
-<section class="py-5 mt-5">
+<!-- Page Header -->
+<section class="section-padding-sm bg-dark-secondary">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-5 fw-bold" style="font-family: 'Oswald', sans-serif;">KAPCSOLAT</h1>
-                <p class="lead text-muted">Vegye fel velünk a kapcsolatot és foglaljon időpontot</p>
+                <h1 class="section-title">CONTACT US</h1>
+                <p class="section-subtitle">Get in touch and book your appointment today</p>
             </div>
         </div>
-        <div class="row g-4 mt-4">
-            <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-map-marker-alt fa-3x text-primary mb-3"></i>
-                    <h5>Címünk</h5>
-                    <p>1051 Budapest<br>Példa utca 12.</p>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="services-overview">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>OUR LOCATION</h4>
+                    <p>1051 Budapest<br>Example Street 12.<br>Easy to find, convenient parking</p>
+                    <a href="#" class="btn btn-outline-orange">GET DIRECTIONS</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-phone fa-3x text-primary mb-3"></i>
-                    <h5>Telefon</h5>
-                    <p>+36 1 234 5678</p>
-                    <a href="tel:+36123456789" class="btn btn-primary">Hívás</a>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h4>CALL US NOW</h4>
+                    <p>+36 1 234 5678<br>Quick booking and inquiries<br>Fast response guaranteed</p>
+                    <a href="tel:+36123456789" class="btn btn-primary">CALL NOW</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="text-center">
-                    <i class="fas fa-clock fa-3x text-primary mb-3"></i>
-                    <h5>Nyitvatartás</h5>
-                    <p>H-P: 09:00-19:00<br>Szo: 09:00-17:00<br>V: 10:00-16:00</p>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>OPENING HOURS</h4>
+                    <p>Mon-Fri: 09:00-19:00<br>Saturday: 09:00-17:00<br>Sunday: 10:00-16:00</p>
+                    <a href="{% url 'barber:book' %}" class="btn btn-outline-orange">BOOK ONLINE</a>
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-12 text-center">
-                <a href="{% url 'barber:book' %}" class="btn btn-primary btn-lg px-5">Online időpontfoglalás</a>
+    </div>
+</section>
+
+<!-- Map & Contact Form Section -->
+<section class="why-choose-us">
+    <div class="container">
+        <div class="service-two-column">
+            <div class="service-image">
+                <div class="service-image-placeholder">
+                    <div class="image-placeholder-content">
+                        <i class="fas fa-map" style="font-size: 4rem;"></i>
+                        <h4>INTERACTIVE MAP</h4>
+                        <p>Find us easily in the city center</p>
+                    </div>
+                </div>
+            </div>
+            <div class="service-content">
+                <h3 class="text-orange">VISIT US</h3>
+                <h4>EASY TO FIND LOCATION</h4>
+                <p class="mb-4">
+                    Located in the heart of the city, our barbershop is easily accessible by public transport 
+                    and car. We offer convenient parking and are surrounded by shops and cafes.
+                </p>
+                <div class="contact-info mb-4">
+                    <p><i class="fas fa-subway"></i> Metro: Line 1, 2 - City Center Station (2 min walk)</p>
+                    <p><i class="fas fa-bus"></i> Bus: Routes 5, 7, 15 - Main Square Stop</p>
+                    <p><i class="fas fa-car"></i> Parking: Street parking and nearby garage available</p>
+                </div>
+                <a href="mailto:info@barbermate.com" class="video-link">Send Email <i class="fas fa-envelope ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="services-overview">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">GET IN TOUCH</h2>
+                <p class="section-subtitle">Send us a message or ask about our services</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="service-card">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-white-custom">Your Name *</label>
+                                <input type="text" class="form-control bg-dark-primary text-white-custom border-orange" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white-custom">Phone Number *</label>
+                                <input type="tel" class="form-control bg-dark-primary text-white-custom border-orange" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-white-custom">Email Address *</label>
+                                <input type="email" class="form-control bg-dark-primary text-white-custom border-orange" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-white-custom">Preferred Service</label>
+                                <select class="form-select bg-dark-primary text-white-custom border-orange">
+                                    <option>Select a service...</option>
+                                    <option>Haircut</option>
+                                    <option>Beard Styling</option>
+                                    <option>Face Care</option>
+                                    <option>Complete Package</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-white-custom">Message</label>
+                                <textarea class="form-control bg-dark-primary text-white-custom border-orange" rows="4" placeholder="Tell us about your preferred style or any special requests..."></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">SEND MESSAGE</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Media Section -->
+<section class="why-choose-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center mb-5">
+                <h2 class="section-title">FOLLOW US</h2>
+                <p class="section-subtitle">Stay updated with our latest work and offers</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h4>INSTAGRAM</h4>
+                    <p>@barbermate_official<br>Daily posts of our work<br>Style inspiration</p>
+                    <a href="#" class="btn btn-outline-orange">FOLLOW US</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <h4>FACEBOOK</h4>
+                    <p>BarberMate Official<br>News and updates<br>Customer reviews</p>
+                    <a href="#" class="btn btn-outline-orange">LIKE PAGE</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h4>GOOGLE</h4>
+                    <p>Leave us a review<br>See ratings and feedback<br>Business information</p>
+                    <a href="#" class="btn btn-outline-orange">REVIEW US</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">BOOK YOUR APPOINTMENT</h2>
+                <p class="cta-subtitle">
+                    Ready to experience the BarberMate difference? Contact us today!
+                </p>
+                <div class="cta-buttons">
+                    <a href="{% url 'barber:book' %}" class="btn btn-cta-white">ONLINE BOOKING</a>
+                    <a href="tel:+36123456789" class="btn btn-cta-outline">
+                        <i class="fas fa-phone me-2"></i>CALL NOW
+                    </a>
+                </div>
             </div>
         </div>
     </div>
