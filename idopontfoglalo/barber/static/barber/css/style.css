@@ -10,9 +10,9 @@
     --bg-dark-lighter: #3a3a3a;      /* Lighter dark for cards/elements */
     
     /* Orange Accent Colors */
-    --orange-primary: #ff6b35;       /* Primary orange for buttons/highlights */
-    --orange-hover: #e55a2b;         /* Darker orange for hover states */
-    --orange-light: #ff7f4d;         /* Lighter orange variant */
+    --orange-primary: #faad91;       /* Primary orange for buttons/highlights */
+    --orange-hover: #dd7b5b;         /* Darker orange for hover states */
+    --orange-light: #fcb092;         /* Lighter orange variant */
     
     /* Text Colors */
     --text-white: #ffffff;           /* Primary white text */
