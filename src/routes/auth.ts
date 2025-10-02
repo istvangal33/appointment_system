@@ -123,7 +123,7 @@ export async function authRoutes(fastify: FastifyInstance): Promise<void> {
   });
 
   // POST /auth/logout
-  fastify.post('/auth/logout', async (request, reply) => {
+  fastify.post('/auth/logout', async (_request, reply) => {
     reply.clearCookie('refreshToken', {
       path: '/',
     });

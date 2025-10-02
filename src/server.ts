@@ -36,7 +36,7 @@ async function registerPlugins(): Promise<void> {
 // Register routes
 async function registerRoutes(): Promise<void> {
   // Health check endpoint
-  fastify.get('/healthz', async (request, reply) => {
+  fastify.get('/healthz', async (_request, reply) => {
     return reply.send({ status: 'ok', timestamp: new Date().toISOString() });
   });
 

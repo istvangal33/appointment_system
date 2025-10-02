@@ -53,7 +53,7 @@ async function main() {
   console.log('✅ Created company:', company.name);
 
   // Create owner membership
-  const ownerMembership = await prisma.companyMembership.upsert({
+  await prisma.companyMembership.upsert({
     where: {
       userId_companyId: {
         userId: owner.id,
@@ -70,7 +70,7 @@ async function main() {
   console.log('✅ Created owner membership');
 
   // Create staff membership
-  const staffMembership = await prisma.companyMembership.upsert({
+  await prisma.companyMembership.upsert({
     where: {
       userId_companyId: {
         userId: staff.id,
@@ -87,7 +87,7 @@ async function main() {
   console.log('✅ Created staff membership');
 
   // Create owner personal calendar
-  const ownerCalendar = await prisma.calendar.upsert({
+  await prisma.calendar.upsert({
     where: { id: `${company.id}-${owner.id}-personal` },
     update: {},
     create: {
@@ -102,7 +102,7 @@ async function main() {
   console.log('✅ Created owner calendar');
 
   // Create staff personal calendar
-  const staffCalendar = await prisma.calendar.upsert({
+  await prisma.calendar.upsert({
     where: { id: `${company.id}-${staff.id}-personal` },
     update: {},
     create: {
@@ -117,7 +117,7 @@ async function main() {
   console.log('✅ Created staff calendar');
 
   // Create sample services
-  const haircut = await prisma.service.upsert({
+  await prisma.service.upsert({
     where: { id: `${company.id}-haircut` },
     update: {},
     create: {
@@ -131,7 +131,7 @@ async function main() {
     },
   });
 
-  const massage = await prisma.service.upsert({
+  await prisma.service.upsert({
     where: { id: `${company.id}-massage` },
     update: {},
     create: {

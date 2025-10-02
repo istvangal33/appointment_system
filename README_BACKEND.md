@@ -77,6 +77,23 @@ This creates:
 
 ### 4. Start the Server
 
+**Quick Start (Automated):**
+
+If you have a PostgreSQL database ready, you can use the automated setup script:
+
+```bash
+./start.sh
+```
+
+This will:
+1. Install dependencies (if needed)
+2. Generate Prisma client
+3. Run migrations
+4. Seed the database
+5. Start the development server
+
+**Manual Start:**
+
 Development mode (with hot reload):
 
 ```bash
@@ -91,6 +108,24 @@ npm start
 ```
 
 The server will start on `http://localhost:3001`
+
+## 🧪 Testing the API
+
+Once the server is running, you can test all endpoints with the included test script:
+
+```bash
+./test-api.sh
+```
+
+This will test:
+- Health check endpoint
+- Login authentication
+- User profile retrieval
+- Company-scoped endpoints
+- Token refresh
+- Logout
+
+Or test manually with curl (see examples below).
 
 ## 🔑 Authentication Flow
 

@@ -33,11 +33,11 @@ export async function meRoutes(fastify: FastifyInstance): Promise<void> {
         });
       }
 
-      const memberships: CompanyMembershipData[] = userData.memberships.map((m) => ({
-        companyId: m.companyId,
-        companyName: m.company.name,
-        companySlug: m.company.slug,
-        role: m.role,
+      const memberships: CompanyMembershipData[] = userData.memberships.map((membership) => ({
+        companyId: membership.companyId,
+        companyName: membership.company.name,
+        companySlug: membership.company.slug,
+        role: membership.role,
       }));
 
       return reply.send({
